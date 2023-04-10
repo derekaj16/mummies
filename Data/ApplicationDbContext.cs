@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Mummies.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace mummies.Data
+namespace Mummies.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -13,7 +12,5 @@ namespace mummies.Data
             : base(options)
         {
         }
-
-        public DbSet<Burialmain> Burialmain { get; set; }
     }
 }

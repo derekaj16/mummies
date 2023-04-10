@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using mummies.Data;
+using Mummies.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Mummies.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("MummyConnection");
+
+var defaultString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(defaultString));
+
+var connectionString = builder.Configuration.GetConnectionString("MummyConnection");
+builder.Services.AddDbContext<MummyDbContext>(options =>
     options.UseNpgsql(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

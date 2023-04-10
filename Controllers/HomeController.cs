@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using mummies.Data;
 using mummies.Models;
+using Mummies.Data;
+using Mummies.Models;
 
 namespace mummies.Controllers;
 
@@ -9,17 +10,19 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    private ApplicationDbContext mummyContext;
+    private MummyDbContext mummyContext;
+    private ApplicationDbContext applicationContext;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+    public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext)
     {
         _logger = logger;
         mummyContext = context;
+        applicationContext = appContext;
     }
 
     public IActionResult Index()
     {
-        ViewBag.things = mummyContext.Burialmain.ToList();
+        ViewBag.things = mummyContext.Burialmains.ToList();
         return View();
     }
 
