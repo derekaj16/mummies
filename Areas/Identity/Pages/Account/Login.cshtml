@@ -71,8 +71,8 @@
                                 {
                                     @if (provider.DisplayName == "Google")
                                     {
-                                        <button type="submit" class="btn btn-light box-shadow" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                                <img src="~/img/Google-01.svg" width="70" alt="google" />
+                                        <button type="submit" class="btn btn-light hover" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                            <partial name="_GooglePartial.cshtml" />
                                         </button>
                                     }
                                     else

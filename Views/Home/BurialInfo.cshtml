@@ -8,10 +8,10 @@
 
 <div class="list-group">
     @foreach (Burialmain x in Model.Burials)
-    {
+    { 
      <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
     }
-    
+
 </div>
 <div page-model="@Model.pageInfo" page-action="BurialInfo" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-outline-dark"
