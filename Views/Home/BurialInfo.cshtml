@@ -4,12 +4,16 @@
 @{
 }
 
-@model List<Burialmain>
+@model BurialsViewModel
 
 <div class="list-group">
-    @foreach (Burialmain x in Model)
+    @foreach (Burialmain x in Model.Burials)
     {
      <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
     }
     
+</div>
+<div page-model="@Model.pageInfo" page-action="BurialInfo" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>

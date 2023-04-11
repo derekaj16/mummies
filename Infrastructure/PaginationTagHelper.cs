@@ -11,10 +11,12 @@ using Mummies.Models.ViewModels;
 
 namespace Mummies.Infrastructure
 {
-    [HtmlTargetElement("div", Attributes = "page-info")]
+    [HtmlTargetElement("div", Attributes = "page-model")]
     public class PaginationTagHelper : TagHelper
     {
-        IUrlHelperFactory uhf;
+        //Dynamically create the page links for us
+
+        private IUrlHelperFactory uhf;
 
         public PaginationTagHelper(IUrlHelperFactory temp)
         {
@@ -24,41 +26,37 @@ namespace Mummies.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext vc { get; set; }
-        public PageInfo PageInfo { get; set; }
+        public PageInfo PageModel { get; set; }
         public string PageAction { get; set; }
+        public bool PageClassesEnabled { get; set; } = false;
         public string PageClass { get; set; }
-        public string PageSelected { get; set; }
-        public string PageNormal { get; set; }
-        public bool PageClassesEnabled { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
 
-
-        public override void Process(TagHelperContext context, TagHelperOutput output)
+        public override void Process(TagHelperContext thc, TagHelperOutput tho)
         {
             IUrlHelper uh = uhf.GetUrlHelper(vc);
 
             TagBuilder final = new TagBuilder("div");
 
-            for (int i = 1; i <= PageInfo.numPages; i++)
+            for (int i = 1; i <= PageModel.numPages; i++)
             {
                 TagBuilder tb = new TagBuilder("a");
+
                 tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
                 if (PageClassesEnabled)
                 {
                     tb.AddCssClass(PageClass);
-                    if (i == PageInfo.currentPage)
-                    {
-                        tb.AddCssClass(PageSelected);
-                    }
-                    else
-                    {
-                        tb.AddCssClass(PageNormal);
-                    }
+                    tb.AddCssClass(i == PageModel.currentPage
+                        ? PageClassSelected : PageClassNormal);
                 }
-                tb.InnerHtml.Append((i).ToString());
+                tb.InnerHtml.Append(i.ToString());
+
                 final.InnerHtml.AppendHtml(tb);
             }
 
-            output.Content.AppendHtml(final.InnerHtml);
+            tho.Content.AppendHtml(final.InnerHtml);
+
         }
     }
 }
