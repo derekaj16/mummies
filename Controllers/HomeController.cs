@@ -80,7 +80,6 @@ namespace mummies.Controllers
 
         public IActionResult BurialDetails(long burialId)
         {
-            Console.WriteLine(burialId);
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View(mummy);
         }
