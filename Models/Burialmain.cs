@@ -7,7 +7,7 @@ namespace Mummies.Models
     [Table("burialmain")]
     public class Burialmain
     {
-        public long? Id { get; set; }
+        public long Id { get; set; }
         public string? Squarenorthsouth { get; set; }
         public string? Headdirection { get; set; }
         public string? Sex { get; set; }

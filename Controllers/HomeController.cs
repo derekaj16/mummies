@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using mummies.Models;
 using Mummies.Data;
 using Mummies.Models;
+using System.Linq;
 
 namespace mummies.Controllers;
 
@@ -33,7 +34,8 @@ public class HomeController : Controller
 
     public IActionResult BurialInfo()
     {
-        return View();
+        var burialInfo = mummyContext.Burialmains.ToList();
+        return View(burialInfo);
     }
 
     public IActionResult SupervisedAnalysis()
@@ -56,9 +58,11 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult BurialDetails()
+    public IActionResult BurialDetails(long burialId)
     {
-        return View();
+        Console.WriteLine(burialId);
+        var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
+        return View(mummy);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

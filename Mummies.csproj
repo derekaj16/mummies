@@ -11,6 +11,8 @@
     <None Remove="Data\" />
     <None Remove="Data\Migrations\" />
     <None Remove="Models\" />
+    <None Remove="Views\ViewModels\" />
+    <None Remove="Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -29,5 +31,7 @@
     <Folder Include="Data\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\ViewModels\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 </Project>

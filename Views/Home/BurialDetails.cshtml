@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Burial Details";
+}
+
+@model Burialmain
+
+<div class="p-5">
+    <div class="row">
+        <div class="col col-3">
+            <h3>Insert image here</h3>
+        </div>
+        <div class="col col-1"></div>
+        <div class="col col-8">
+            <div class="row mb-5">
+                <div class="col heading">
+                    <h1>Burial</h1>
+                    <div>Burial ID: @Model.Id</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 text-left">
+                    <div class="row mb-2 text-left">
+                        <b>Sex</b>
+                    </div>
+                    <div class="row mb-2 text-left">
+                        <b>Location</b>
+                    </div>
+                    <div class="row mb-2 text-left">
+                        <b>Head Direction</b>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mb-2">Male</div>
+                    <div class="row mb-2">
+                        190/200N 40/50E
+                    </div>
+                    <div class="row mb-2">E</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
