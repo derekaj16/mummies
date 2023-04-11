@@ -6,13 +6,29 @@
 
 @model BurialsViewModel
 
-<div class="list-group">
-    @foreach (Burialmain x in Model.Burials)
-    { 
-     <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
-    }
 
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <a class="rounded-top btn btn-light  w-100" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+            Link with href
+        </a>
+        <div class="collapse" id="collapseFilter">
+            <div class="rounded-bottom card card-body  w-100">
+                <form class="form">
+
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+        </div>
+        <div class="list-group mt-5">
+            @foreach (Burialmain x in Model.Burials)
+            {
+                <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
+            }
+        </div>
+    </div>
 </div>
+
 <div page-model="@Model.pageInfo" page-action="BurialInfo" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-outline-dark"
      page-class-selected="btn-primary" class="btn-group pull-right m-1">
