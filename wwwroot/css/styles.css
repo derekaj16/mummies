@@ -4,7 +4,6 @@ h1 {
   padding-top: 10px;
   padding-bottom: 10px;
   font-weight: bold;
-  font-family: "Bebas Neue", cursive;
   letter-spacing: 5px;
   font-size: 4rem;
 }
@@ -145,14 +144,14 @@ a {
 
 /* Place text in the middle of the image */
 .hero-text {
-  text-align: right;
-  position: absolute;
-  top: 10%;
-  left: 60%;
-  color: #b1bca0;
-  font-family: "Bebas Neue", cursive;
-  letter-spacing: 5px;
-  font-size: 4rem;
+    text-align: right;
+    position: absolute;
+    top: 10%;
+    left: 60%;
+    color: #b1bca0;
+    font-family: "Bebas Neue", cursive;
+    letter-spacing: 5px;
+    font-size: 4rem;
 }
 
 .hero-text h1 {
@@ -407,4 +406,19 @@ h2 {
 
 .CookieMessage-button:hover {
   background: #383d3f;
+}
+
+.Burial{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burialInfo {
+    display: flex;
+    justify-content: center;
+    align-items:baseline;
+    height: max-content;
+    gap: 5rem;
+    margin: 3rem;
 }
