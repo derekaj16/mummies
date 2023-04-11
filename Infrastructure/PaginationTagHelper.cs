@@ -9,12 +9,11 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Mummies.Models.ViewModels;
 
-namespace WayOfWaterBuffalo.Infrastructure
+namespace Mummies.Infrastructure
 {
     [HtmlTargetElement("div", Attributes = "page-info")]
     public class PaginationTagHelper : TagHelper
     {
-
         IUrlHelperFactory uhf;
 
         public PaginationTagHelper(IUrlHelperFactory temp)
