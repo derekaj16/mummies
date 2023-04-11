@@ -4,3 +4,6 @@
 // Write your JavaScript code.
 
 
+$(".js-example-tags").select2({
+    tags: true
+});

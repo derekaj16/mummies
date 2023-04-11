@@ -6,6 +6,7 @@ using Mummies.Models;
 using System.Linq;
 using mummies.Models.ViewModels;
 using Mummies.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace mummies.Controllers
 {
@@ -37,6 +38,28 @@ namespace mummies.Controllers
 
         public IActionResult BurialInfo(string category, int pageNum = 1)
         {
+            ViewBag.HairViewModel = new HairColorViewModel();
+            // Get unique values for textile functions (because there are so many repeats)
+            var functions = mummyContext.Textilefunctions.Select(t => t.Value).ToList();
+            HashSet<String> textileSet = new HashSet<String>(functions);
+
+            var ages = mummyContext.Burialmains.Select(a => a.Ageatdeath).ToList();
+            HashSet<String> ageSet = new HashSet<String>(ages);
+
+            var areas = mummyContext.Burialmains.Select(a => a.Area).ToList();
+            HashSet<String> areaSet = new HashSet<String>(areas);
+
+            var hairColors = mummyContext.Burialmains.Select(h => h.Haircolor).ToList();
+            HashSet<String> hairSet = new HashSet<String>(hairColors);
+
+            ViewBag.TextileFunctions = textileSet.ToList();
+            ViewBag.Colors = mummyContext.Colors.ToList();
+            ViewBag.Ages = ageSet.ToList();
+            ViewBag.Areas = areaSet.ToList();
+            ViewBag.HairColors = hairSet.ToList();
+            
+
+            // Create Pagination
             int pageSize = 30;
 
             var x = new BurialsViewModel

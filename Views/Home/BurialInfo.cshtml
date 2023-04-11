@@ -15,16 +15,158 @@
         <div class="collapse" id="collapseFilter">
             <div class="rounded-bottom card card-body  w-100">
                 <form class="form">
+                    @*
+        Filter by the following:
+            Textile color
 
-                    <button type="submit">Filter</button>
+            Textile structure
+
+            Sex
+
+            Burial Depth
+
+            Estimate Stature
+
+            Age at Death
+
+            Head Direction
+
+            Burial ID (SquareNorthSouth, NorthSouth, SquareEastWest, EastWest, Area, Burial Number)
+
+            Textile Function
+
+            Hair Color
+
+            These are the most important items for ASP.NET filtering/searching. They will be added to the case document.
+                    *@
+
+                    <input class="form-control" list="northSouthOptions" id="northSouthList" placeholder="">
+                    <datalist id="northSouthOptions">
+                        @for (int i = 0; i <= 500; i = i + 10)
+                        {
+                            <option value="@i" />
+                        }
+
+                    </datalist>
+                    <select class="form-select">
+                        <option value=""></option>
+                        <option value="N">N</option>
+                        <option value="S">S</option>
+                    </select>
+
+                    <input class="form-control" list="eastWestOptions" id="eastWestList" placeholder="">
+                    <datalist id="eastWestOptions">
+                        @for (int i = 0; i <= 500; i = i + 10)
+                        {
+                            <option value="@i" />
+                        }
+
+                    </datalist>
+                    <select class="form-select">
+                        <option value=""></option>
+                        <option value="E">E</option>
+                        <option value="W">W</option>
+                    </select>
+
+                    <select class="form-select">
+                        <option value=""></option>
+                        @foreach (Color color in ViewBag.Colors)
+                        {
+                            <option value="@color.Id">@color.Value</option>
+                        }
+                    </select>
+
+                    <select class="form-select">
+                        <option value=""></option>
+                        @foreach (String textile in ViewBag.TextileFunctions)
+                        {
+                            <option value="@textile">@textile</option>
+                        }
+                    </select>
+
+                    <select class="form-select">
+                        @for (Double depth = 0.0; depth < 5.0; depth = depth + 0.5)
+                        {
+                            <option value="@(depth + 0.5)">@depth - @(depth + 0.49) </option>
+                        }
+                    </select>
+                    <select class="form-select">
+                        <option value=""></option>
+                        @foreach (String age in ViewBag.Ages)
+                        {
+                            @switch (age)
+                            {
+                                case "N":
+                                    <option value="@age">
+                                        @Html.Raw("Newborn")
+                                    </option>
+                                    break;
+                                case "I":
+                                    <option value="@age">
+                                        @Html.Raw("Infant")
+                                    </option>
+                                    break;
+                                case "C":
+                                    <option value="@age">
+                                        @Html.Raw("Child")
+                                    </option>
+                                    break;
+                                case "A":
+                                    <option value="@age">
+                                        @Html.Raw("Adult")
+                                    </option>
+                                    break;
+                                case "U":
+                                    <option value="@age">
+                                        @Html.Raw("Unknown")
+                                    </option>
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+
+                    </select>
+                    <select class="form-select">
+                        @foreach (String color in ViewBag.HairColors)
+                        {
+                            @if (color != null)
+                            {
+                                @if (ViewBag.HairViewModel.HairColorDict.ContainsKey(color))
+                                {
+                                    <option value="@color">@(ViewBag.HairViewModel.HairColorDict[color])</option>
+                                }
+                                else
+                                {
+                                    <option value="">Unkown</option>
+                                }
+                            }
+
+
+                        }
+                    </select>
+
+                    <input class="form-control" list="hairOptions" id="hairList" placeholder="">
+                    <datalist id="hairOptions">
+                        
+                    </datalist>
+
+
+
+
+
+
+
+                    <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
             </div>
         </div>
         <div class="list-group mt-5">
             @foreach (Burialmain x in Model.Burials)
-            {
+                                        {
                 <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
-            }
+                                    }
         </div>
     </div>
 </div>
