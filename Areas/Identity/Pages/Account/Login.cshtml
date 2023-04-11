@@ -13,12 +13,12 @@
                 <h2>Log in</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                     <label asp-for="Input.Email" class="form-label"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
                     <label asp-for="Input.Password" class="form-label"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
@@ -69,7 +69,16 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    @if (provider.DisplayName == "Google")
+                                    {
+                                        <button type="submit" class="btn btn-light box-shadow" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                <img src="~/img/Google-01.svg" width="70" alt="google" />
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
                                 }
                             </p>
                         </div>
