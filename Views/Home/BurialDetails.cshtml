@@ -6,6 +6,10 @@
 }
 
 @model Burialmain
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
 
 <div class="Burial">
     <h1>@Model.Northsouth @Model.Squarenorthsouth @Model.Eastwest @Model.Squareeastwest @Model.Area #@Model.Burialnumber</h1>
@@ -120,3 +124,10 @@
         </div>
     </div>
 </div>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="editDelete">
+        <a class="button" asp-action="EditBurial" asp-controller="Home" asp-route-burialId="@Model.Id">Edit</a>
+        <a class="button" asp-action="DeleteBurial" asp-controller="Home" asp-route-burialId="@Model.Id">Delete</a>
+    </div>
+}
