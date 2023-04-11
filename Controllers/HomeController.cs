@@ -58,6 +58,11 @@ namespace mummies.Controllers
             return View(x);
         }
 
+        public IActionResult AddBurial()
+        {
+            return View("BurialForm");
+        }
+
         public IActionResult SupervisedAnalysis()
         {
             return View();

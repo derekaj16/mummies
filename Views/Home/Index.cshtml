@@ -1,11 +1,76 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<body>
+    <div class="wrapper">
+        <div class="hero-text">
+            <h1 class="herotextoverride">Fag</h1>
+            <h1 class="herotextoverride">El-Gamous</h1>
+        </div>
+		<img class="hero-image" src="~/img/fag_el-gamous.jpg" />
+        <div class="bg-light border-top border-bottom fact">
+            <div style="margin:0 5%;">
+                <h1 class="text-secondary runner runnertext">What is Fag El-Gamous?</h1>
+                <p class="text-body-tertiary">
+                    Fag El-Gamous (The way of the water buffalo) is a cemetary that is part of the BYU egyptian excavation
+                    project
+                    This cemetery was in use during the Graeco-Roman era of Egyptian history. In the early 1900’s some Mummy
+                    Portraits
+                    were found there by Bernard Grenfell and Arthur Hunt. The cemetery is very large and densely populated with
+                    burials. Some lie in the mudstone escarpments, where tombs were carved into the rocks. These are typically
+                    somewhat wealthier burials, including a golden masked mummy who was the daughter of a priest in the Ptolemaic
+                    period. Most of the burials lie loose in the sand. These burials range from being fully skeletonized to being
+                    extremely well preserved. They range from just after 300 BC to about 500 AD. During that time period nearly
+                    all
+                    of
+                    the inhabitants of the Fayoum converted to Christianity. There is some evidence for this in the burials. We
+                    are
+                    doing vigorous research attempting to determine if there are more detectable archaeological markers pointing
+                    to
+                    Christian burial practices.
+                </p>
+            </div>
+        </div>
+        <div class="indexInfo">
+            <div>
+                <h2 class="text-secondary">Purpose</h2>
+                <p class="text-body-tertiary">
+                    This project is meant to aid BYU researchers in their studies of ancient egyptian burial practices.
+                    It includes a system for researchers record burial information. This information is open to the public along
+                    with insights
+                    into egyptian burial practices that comes from data collected in the Fag El-Gamous cemetary.
+                </p>
+            </div>
+			<img class="indexPhoto" src="~/img/excavation.jpg" />
+        </div>
+    </div>
+    
+    <div id="cookie-notification" class="CookieMessage" style="display: none;">
+        <div class="CookieMessage-content">
+            <p>
+                During a visit to our website, cookies may be placed on the hard drive of the user’s computer in order to
+                better adapt the website to the needs of the returning user.
+                By using our site, you acknowledge that you have read and understand our <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>.
+            </p>
+            <p><a id="cookie-notification-close" class="CookieMessage-button" href="#">Ok</a></p>
 
+        </div>
+    </div>
+</body>
+<script>
+    if (!localStorage.getItem("cookiesAccepted")) {
+      var cookieMessage = document.getElementById('cookie-notification');
+      var closeCookie = document.getElementById('cookie-notification-close');
 
-<div class="text-center">
-    <h1 class="display-4">The Way of the Buffalo</h1>
-    <h4>This is the way</h4>
-    <img src="~/img/buffalo.jpg" width="700" alt="buffalo" />
-</div>
+      cookieMessage.style.display = 'block';
+      closeCookie.addEventListener("click", function (e) {
+        e.preventDefault();
+        localStorage.setItem("cookiesAccepted", true);
+
+        cookieMessage.style.display = 'none';
+      });
+    }
+</script>
+
+</html>
 

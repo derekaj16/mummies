@@ -7,39 +7,116 @@
 
 @model Burialmain
 
-<div class="p-5">
-    <div class="row">
-        <div class="col col-3">
-            <h3>Insert image here</h3>
+<div class="Burial">
+    <h1>@Model.Northsouth @Model.Squarenorthsouth @Model.Eastwest @Model.Squareeastwest @Model.Area #@Model.Burialnumber</h1>
+</div>
+<div class="burialInfo">
+    <div class="card text-bg-light mb-3" style="min-width: 30%;">
+        <div class="card-header">Burial Info:</div>
+        <div class="card-body" style="min-height: 10rem;">
+            @if(Model.Depth is not null)
+            {
+                <p class="card-text">Depth: @Model.Depth m</p>
+            }
+            else
+            {
+                <p class="card-text">Depth:</p>
+            }
+            
+            @if(Model.Headdirection == "W")
+            {
+                <p class="card-text">Head Direction: West</p>
+            }
+            else if (Model.Headdirection == "N")
+            {
+                <p class="card-text">Head Direction: North</p>
+            }
+            else if (Model.Headdirection == "E")
+            {
+                <p class="card-text">Head Direction: East</p>
+            }
+            else if (Model.Headdirection == "S")
+            {
+                <p class="card-text">Head Direction: South</p>
+            }
+            else
+            {
+                <p class="card-text">Head Direction: @Model.Headdirection</p>
+            }
+            
         </div>
-        <div class="col col-1"></div>
-        <div class="col col-8">
-            <div class="row mb-5">
-                <div class="col heading">
-                    <h1>Burial</h1>
-                    <div>Burial ID: @Model.Id</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3 text-left">
-                    <div class="row mb-2 text-left">
-                        <b>Sex</b>
-                    </div>
-                    <div class="row mb-2 text-left">
-                        <b>Location</b>
-                    </div>
-                    <div class="row mb-2 text-left">
-                        <b>Head Direction</b>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row mb-2">Male</div>
-                    <div class="row mb-2">
-                        190/200N 40/50E
-                    </div>
-                    <div class="row mb-2">E</div>
-                </div>
-            </div>
+    </div>
+    <div class="card text-bg-light mb-3" style="min-width: 30%;">
+        <div class="card-header">Mummy Info:</div>
+        <div class="card-body" style="min-height: 10rem;">
+            @if (Model.Sex == "M")
+            {
+                <p class="card-text">Sex: Male</p>
+            }
+            else if (Model.Sex == "F")
+            {
+                <p class="card-text">Sex: Female</p>
+            }
+            else if (Model.Sex == "U")
+            {
+                <p class="card-text">Sex: Unknown</p>
+            }
+            else
+            {
+                <p class="card-text">Sex: @Model.Sex</p>
+            }
+            @if (Model.Ageatdeath == "A")
+            {
+                <p class="card-text">Age at Death: Adult</p>
+            }
+            else if (Model.Ageatdeath == "C")
+            {
+                <p class="card-text">Age at Death: Child</p>
+            }
+            else if (Model.Ageatdeath == "I")
+            {
+                <p class="card-text">Age at Death: Infant</p>
+            }
+            else if (Model.Ageatdeath == "N")
+            {
+                <p class="card-text">Age at Death: Newborn</p>
+            }
+            else if (Model.Ageatdeath == "U")
+            {
+                <p class="card-text">Age at Death: Unknown</p>
+            }
+            else
+            {
+                <p class="card-text">Age at Death: @Model.Ageatdeath</p>
+            }
+            @if (Model.Haircolor == "B")
+            {
+                <p class="card-text">Hair Color: Brown</p>
+            }
+            else if (Model.Haircolor == "K")
+            {
+                <p class="card-text">Hair Color: Black</p>
+            }
+            else if (Model.Haircolor == "A")
+            {
+                <p class="card-text">Hair Color: Brown-Red</p>
+            }
+            else if (Model.Haircolor == "R")
+            {
+                <p class="card-text">Hair Color: Red/Red-Blond</p>
+            }
+            else if (Model.Haircolor == "K")
+            {
+                <p class="card-text">Hair Color: Blond</p>
+            }
+            else if (Model.Haircolor == "U")
+            {
+                <p class="card-text">Hair Color: Unknown</p>
+            }
+            else
+            {
+                <p class="card-text">Hair Color: @Model.Haircolor</p>
+            }
         </div>
     </div>
 </div>
