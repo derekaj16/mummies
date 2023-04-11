@@ -73,14 +73,18 @@ namespace mummies.Controllers
             return View();
         }
 
-        public IActionResult ManageAccounts()
+        public IActionResult Admin()
         {
             return View();
         }
 
+        //public IActionResult ManageAccounts()
+        //{
+        //    return View();
+        //}
+
         public IActionResult BurialDetails(long burialId)
         {
-            Console.WriteLine(burialId);
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View(mummy);
         }

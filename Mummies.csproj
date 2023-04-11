@@ -13,6 +13,9 @@
     <None Remove="Models\" />
     <None Remove="Views\ViewModels\" />
     <None Remove="Infrastructure\" />
+    <None Remove="Views\Admin\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Mailer\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -25,6 +28,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+    <PackageReference Include="SendGrid" Version="9.6.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +39,14 @@
     <Folder Include="Data\Migrations\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Mailer\" />
+    <Folder Include="wwwroot\lib\qrcode\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\qrcode\" />
+    <Content Remove="wwwroot\img\" />
   </ItemGroup>
 </Project>
