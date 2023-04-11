@@ -43,8 +43,10 @@
     <Folder Include="Services\" />
     <Folder Include="Services\Mailer\" />
     <Folder Include="wwwroot\lib\qrcode\" />
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\qrcode\" />
+    <Content Remove="wwwroot\img\" />
   </ItemGroup>
 </Project>

@@ -73,10 +73,15 @@ namespace mummies.Controllers
             return View();
         }
 
-        public IActionResult ManageAccounts()
+        public IActionResult Admin()
         {
             return View();
         }
+
+        //public IActionResult ManageAccounts()
+        //{
+        //    return View();
+        //}
 
         public IActionResult BurialDetails(long burialId)
         {
