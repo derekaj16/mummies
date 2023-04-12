@@ -7,6 +7,9 @@ using System.Linq;
 using mummies.Models.ViewModels;
 using Mummies.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace mummies.Controllers
 {
@@ -17,17 +20,18 @@ namespace mummies.Controllers
 
         private MummyDbContext mummyContext;
         private ApplicationDbContext applicationContext;
+        private UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext)
+        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             mummyContext = context;
             applicationContext = appContext;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            ViewBag.things = mummyContext.Burialmains.ToList();
             return View();
         }
 
@@ -36,10 +40,13 @@ namespace mummies.Controllers
             return View();
         }
 
-        public IActionResult BurialInfo(string category, int pageNum = 1)
+        public IActionResult BurialInfoAsync(string category, int pageNum = 1)
         {
             int pageSize = 30;
+            //var currentUser = await _userManager.GetUserAsync(User);
 
+            // Check if the user is in the "Admin" role
+            //ViewBag.isAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
             var x = new BurialsViewModel
             {
                 Burials = mummyContext.Burialmains
@@ -58,12 +65,13 @@ namespace mummies.Controllers
             // var burialInfo = mummyContext.Burialmains.ToList();
             return View(x);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddBurial()
         {
             return View("BurialForm");
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddBurial(Burialmain b)
         {
@@ -79,12 +87,14 @@ namespace mummies.Controllers
                 return View("BurialForm", b);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditBurial(long burialId)
         {
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View("BurialForm", mummy);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditBurial(Burialmain b)
         {
@@ -92,12 +102,14 @@ namespace mummies.Controllers
             mummyContext.SaveChanges();
             return RedirectToAction("BurialInfo");
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult DeleteBurial(long burialId)
         {
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View(mummy);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteBurial(Burialmain b)
         {
