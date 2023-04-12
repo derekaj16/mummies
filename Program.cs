@@ -103,12 +103,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self'; frame-src 'self'");
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers.Add("Content-Security-Policy", "default-src 'self' http://54.145.41.204:8080/predict; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self'; frame-src 'self'");
 
-    await next();
-});
+//    await next();
+//});
 
 app.MapControllerRoute(
     name: "default",

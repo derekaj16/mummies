@@ -4,5 +4,44 @@
 @{
 
 }
+@model HeadDirectionModel
+<div class="text-center">
+    <h1 class="display-4">Supervised Analysis</h1>
+</div>
 
-<h1>Supervised Analysis Page</h1>
+<br />
+
+<div>
+    <form class="customForm" method="post" asp-action="HeadDirectionAPI">
+        <label asp-for="Depth">Depth:</label>
+        <input type="number" step=".01" asp-for="Depth" />
+        <label asp-for="Sex">Sex:</label>
+        <select asp-for="Sex">
+            <option value="U">Unknown</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+        <label asp-for="Goods">Goods</label>
+        <input type="checkbox" asp-for="Goods">
+        <label asp-for="Wrapping">Wrapping</label>
+        <select asp-for="Wrapping">
+            <option value="U">Unknown</option>
+            <option value="B">Bones</option>
+            <option value="W">Whole</option>
+            <option value="S">Skeleton</option>
+        </select>
+        <label asp-for="Count">Count of Yarns:</label>
+        <input type="number" step="1" asp-for="Count" />
+        <label asp-for="Length">Length:</label>
+        <input type="number" step="1" asp-for="Length" />
+        <select asp-for="AgeAtDeath">
+            <option value="U">Unknown</option>
+            <option value="A">Adult</option>
+            <option value="C">Child</option>
+            <option value="I">Infant</option>
+            <option value="N">NewBorn</option>
+        </select>
+
+        <button class="button" type="submit">Submit</button>
+    </form>
+</div>
