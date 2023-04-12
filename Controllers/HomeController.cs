@@ -220,29 +220,30 @@ namespace mummies.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SexPrediction(SexModel s)
+        public IActionResult SexPrediction(SexModel jsonData)
         {
+
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://54.145.41.204:8080/predict");
-                var postJob = client.PostAsJsonAsync<SexModel>("predict", s);
+                client.BaseAddress = new Uri("http://3.82.139.123:8080/predict");
+                var postJob = client.PostAsJsonAsync<SexModel>("predict", jsonData);
                 postJob.Wait();
 
                 var response = postJob.Result;
-                ViewBag.postResult = response.Content.ReadAsStringAsync().Result;
-                //JObject jsonObject = JObject.Parse(responseContent);
+                var responseContent = response.Content.ReadAsStringAsync().Result;
+                JObject jsonObject = JObject.Parse(responseContent);
 
-                //// Access the desired value by its key
-                //if (jsonObject.ContainsKey("prediction"))
-                //{
-                //    var desiredValue = jsonObject["prediction"].Value<string>();
-                //    ViewBag.postResult = desiredValue;
-                //}
-                //else
-                //{
-                //    ViewBag.postResult = "Key not found in response";
-                //}
-               return View("Result");
+                // Access the desired value by its key
+                if (jsonObject.ContainsKey("prediction"))
+                {
+                    var desiredValue = jsonObject["prediction"].Value<string>();
+                    ViewBag.postResult = desiredValue;
+                }
+                else
+                {
+                    ViewBag.postResult = "Key not found in response";
+                }
+                return View("Result");
             }
         }
 
