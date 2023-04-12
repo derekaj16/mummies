@@ -15,7 +15,7 @@ h2 {
   padding-bottom: 25px;
 }
 
-form {
+.customForm {
   display: grid;
   grid-template-columns: 0.3fr 1fr;
   grid-column-gap: 2rem;
@@ -30,19 +30,19 @@ form {
   font-size: 18px;
 }
 
-form > input,
-form > select {
+.customForm > input,
+.customForm > select {
   width: 60%;
   margin: 0.5rem 0;
   border: none;
   border-radius: 4px;
 }
 
-form > textarea {
+.customForm > textarea {
   border-radius: 8px;
 }
 
-form > label {
+.customForm > label {
   justify-self: end;
 }
 
@@ -262,6 +262,7 @@ h2 {
   text-align: left;
   font: normal 16px sans-serif;
   padding: 30pxpx 50px;
+  margin-top: 5rem;
 }
 
 .footer-distributed .footer-left p {
@@ -421,4 +422,16 @@ h2 {
     height: max-content;
     gap: 5rem;
     margin: 3rem;
+}
+
+.editDelete{
+    margin-left: 20%;
+   
+}
+.editDelete > a, .add > a{
+    text-decoration: none;
+}
+
+.add {
+    margin: 2rem 5%
 }

@@ -6,6 +6,7 @@ using Mummies.Models;
 using System.Linq;
 using mummies.Models.ViewModels;
 using Mummies.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace mummies.Controllers
 {
@@ -58,13 +59,56 @@ namespace mummies.Controllers
             return View(x);
         }
 
+        [HttpGet]
         public IActionResult AddBurial()
         {
             return View("BurialForm");
         }
+        [HttpPost]
+        public IActionResult AddBurial(Burialmain b)
+        {
+            if (ModelState.IsValid)
+            {
+                mummyContext.Add(b);
+                mummyContext.SaveChanges();
+                return RedirectToAction("BurialInfo");
+            }
+            //if form does not validate sends user back to the form
+            else
+            {
+                return View("BurialForm", b);
+            }
+        }
+        [HttpGet]
+        public IActionResult EditBurial(long burialId)
+        {
+            var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
+            return View("BurialForm", mummy);
+        }
+        [HttpPost]
+        public IActionResult EditBurial(Burialmain b)
+        {
+            mummyContext.Update(b);
+            mummyContext.SaveChanges();
+            return RedirectToAction("BurialInfo");
+        }
+        [HttpGet]
+        public IActionResult DeleteBurial(long burialId)
+        {
+            var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
+            return View(mummy);
+        }
+        [HttpPost]
+        public IActionResult DeleteBurial(Burialmain b)
+        {
+            mummyContext.Burialmains.Remove(b);
+            mummyContext.SaveChanges();
+            return RedirectToAction("BurialInfo");
+        }
 
         public IActionResult SupervisedAnalysis()
         {
+
             return View();
         }
 

@@ -37,12 +37,12 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Models\ViewModels\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Mailer\" />
     <Folder Include="wwwroot\lib\qrcode\" />
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\qrcode\" />
