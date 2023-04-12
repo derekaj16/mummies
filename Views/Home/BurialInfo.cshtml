@@ -7,91 +7,129 @@
 @model BurialsViewModel
 
 
+
+<p>Total Burials: @Model.pageInfo.totalNumBurials</p>
+
+@* SEARCH RESULTS *@
 <div class="row">
     <div class="col-md-8 mx-auto">
-        <a class="rounded-top btn btn-light  w-100" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
-            Link with href
-        </a>
-        <div class="collapse" id="collapseFilter">
-            <div class="rounded-bottom card card-body  w-100">
-                <form class="form">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggles" viewBox="0 0 16 16">
+                <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7h-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm2.45 0A3.49 3.49 0 0 1 8 3.5 3.49 3.49 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5H6.95zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7z" />
+            </svg>
+            <div class="mx-2">Filter Options</div>
+        </button>
+
+        @foreach (Mummy m in ViewBag.MummyList)
+{
+                <div>
+                    <h3>Id: @m.mummyId</h3>
+                    <p>
+                        Depth: @m.burialDepth<br />
+                        Age: @m.ageAtDeath<br />
+                        Hair Color: @m.hairColor
+                    </p>
+
+                </div>
+}
+
+
+        @*@if (Model.Burials.Count() != 0)
+        {
+            <div class="list-group mt-5">
+                @foreach (Burialmain x in Model.Burials)
+                {
+                    <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">Age at Death: @x.Ageatdeath ... Burial Depth: @x.Depth ... Hair Color: @x.Haircolor</a>
+                }
+            </div>
+        }
+        else
+        {
+            <h1 class="text-center">Sorry! No results matched your search.</h1>
+        }*@
+    </div>
+</div>
+
+<div page-model="@Model.pageInfo" burials-view-model="@Model" page-action="BurialInfo" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
+
+
+@* FILTERING MODAL *@
+
+<div class="modal fade" id="filter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Bring out ya dead!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form" method="get" asp-action="BurialInfo">
+                    @*<label class="form-label">Distance (m)</label>
+                        <input class="form-control" list="northSouthOptions" id="squareNorthSouth" asp-for="squareNorthSouth">
+                        <datalist id="squareNorthSouth" asp-for="squareNorthSouth">
+                            @for (int i = 0; i <= 500; i = i + 10)
+                            {
+                                <option value="@i">@i/@(i+10)</option>
+                            }
+                        </datalist>
+
+                        <label class="form-label" asp-for="northSouth">N/S</label>
+                        <select class="form-select" asp-for="northSouth">
+                            <option value=""></option>
+                            <option value="N">N</option>
+                            <option value="S">S</option>
+                        </select>
+
+                        <label class="form-label">Distance (m)</label>
+                        <input class="form-control" list="eastWestOptions" id="squareEastWest" asp-for="squareEastWest">
+                        <datalist id="eastWestOptions" asp-for="squareEastWest">
+                            @for (int i = 0; i <= 500; i = i + 10)
+                            {
+                                <option value="@i">@i/@(i+10)</option>
+                            }
+
+                        </datalist>
+
+                        <label class="form-label" asp-for="eastWest">E/W</label>
+                        <select class="form-select" asp-for="eastWest">
+                            <option value=""></option>
+                            <option value="E">E</option>
+                            <option value="W">W</option>
+                        </select>*@
                     @*
-        Filter by the following:
-            Textile color
+                        <label class="form-label" asp-for="textileColor">Textile Color</label>
+                        <select class="form-select" asp-for="textileColor">
+                            <option value=""></option>
+                            @foreach (Color color in ViewBag.Colors)
+                            {
+                                <option value="@color.Id">@color.Value</option>
+                            }
+                        </select>
 
-            Textile structure
+                        <label class="form-label" asp-for="textileFunction">Textile Function</label>
+                        <input class="form-control" list="textileOptions" id="textileList"  asp-for="textileFunction">
+                        <datalist id="textileOptions" asp-for="textileFunction">
+                            @foreach (String textile in ViewBag.TextileFunctions)
+                            {
+                                <option value="@textile">@textile</option>
+                            }
+                        </datalist>  *@
 
-            Sex
-
-            Burial Depth
-
-            Estimate Stature
-
-            Age at Death
-
-            Head Direction
-
-            Burial ID (SquareNorthSouth, NorthSouth, SquareEastWest, EastWest, Area, Burial Number)
-
-            Textile Function
-
-            Hair Color
-
-            These are the most important items for ASP.NET filtering/searching. They will be added to the case document.
-                    *@
-
-                    <input class="form-control" list="northSouthOptions" id="northSouthList" placeholder="">
-                    <datalist id="northSouthOptions">
-                        @for (int i = 0; i <= 500; i = i + 10)
-                        {
-                            <option value="@i" />
-                        }
-
-                    </datalist>
-                    <select class="form-select">
-                        <option value=""></option>
-                        <option value="N">N</option>
-                        <option value="S">S</option>
-                    </select>
-
-                    <input class="form-control" list="eastWestOptions" id="eastWestList" placeholder="">
-                    <datalist id="eastWestOptions">
-                        @for (int i = 0; i <= 500; i = i + 10)
-                        {
-                            <option value="@i" />
-                        }
-
-                    </datalist>
-                    <select class="form-select">
-                        <option value=""></option>
-                        <option value="E">E</option>
-                        <option value="W">W</option>
-                    </select>
-
-                    <select class="form-select">
-                        <option value=""></option>
-                        @foreach (Color color in ViewBag.Colors)
-                        {
-                            <option value="@color.Id">@color.Value</option>
-                        }
-                    </select>
-
-                    <select class="form-select">
-                        <option value=""></option>
-                        @foreach (String textile in ViewBag.TextileFunctions)
-                        {
-                            <option value="@textile">@textile</option>
-                        }
-                    </select>
-
-                    <select class="form-select">
+                    <label class="form-label" asp-for="burialDepth">Depth</label>
+                    <select class="form-select" asp-for="burialDepth">
+                        <option value="">All</option>
                         @for (Double depth = 0.0; depth < 5.0; depth = depth + 0.5)
                         {
-                            <option value="@(depth + 0.5)">@depth - @(depth + 0.49) </option>
+                            <option value="@(depth + 0.5)">@depth - @(depth + 0.49)</option>
                         }
                     </select>
-                    <select class="form-select">
-                        <option value=""></option>
+
+                    <label class="form-label" asp-for="ageAtDeath">Age</label>
+                    <select class="form-select" asp-for="ageAtDeath" name="ageAtDeath">
+                        <option value="">All</option>
                         @foreach (String age in ViewBag.Ages)
                         {
                             @switch (age)
@@ -124,54 +162,24 @@
                                 default:
                                     break;
                             }
-
                         }
 
                     </select>
-                    <select class="form-select">
-                        @foreach (String color in ViewBag.HairColors)
-                        {
-                            @if (color != null)
+
+                    <label class="form-label" asp-for="hairColor">Hair Color</label>
+                        <select class="form-select" asp-for="hairColor">
+                            <option value="">All</option>
+                            @foreach(var color in ViewBag.HairViewModel.HairColorDict)
                             {
-                                @if (ViewBag.HairViewModel.HairColorDict.ContainsKey(color))
-                                {
-                                    <option value="@color">@(ViewBag.HairViewModel.HairColorDict[color])</option>
-                                }
-                                else
-                                {
-                                    <option value="">Unkown</option>
-                                }
+                                <option value="@color.Key">@color.Value</option>
                             }
-
-
-                        }
-                    </select>
-
-                    <input class="form-control" list="hairOptions" id="hairList" placeholder="">
-                    <datalist id="hairOptions">
-                        
-                    </datalist>
-
-
-
-
-
-
-
-                    <button type="submit" class="btn btn-primary">Filter</button>
+                        </select>
+                    <hr />
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
                 </form>
             </div>
-        </div>
-        <div class="list-group mt-5">
-            @foreach (Burialmain x in Model.Burials)
-                                        {
-                <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Id</a>
-                                    }
         </div>
     </div>
 </div>
 
-<div page-model="@Model.pageInfo" page-action="BurialInfo" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark"
-     page-class-selected="btn-primary" class="btn-group pull-right m-1">
-</div>
+

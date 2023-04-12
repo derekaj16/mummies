@@ -14,7 +14,7 @@ namespace mummies.Models.ViewModels
             {"A", "Brown-red"},
             {"R", "red/Red-Bl"},
             {"D", "Blond" },
-            {"U", "Unkown" }
+            {"U", "Unknown" }
         };
     }
 }

@@ -26,6 +26,7 @@ namespace Mummies.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext vc { get; set; }
+        public BurialsViewModel BurialsViewModel { get; set; }
         public PageInfo PageModel { get; set; }
         public string PageAction { get; set; }
         public bool PageClassesEnabled { get; set; } = false;
@@ -43,7 +44,13 @@ namespace Mummies.Infrastructure
             {
                 TagBuilder tb = new TagBuilder("a");
 
-                tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
+                tb.Attributes["href"] = uh.Action(PageAction, new
+                {
+                    ageAtDeath = BurialsViewModel.ageAtDeath,
+                    burialDepth = BurialsViewModel.burialDepth,
+                    hairColor = BurialsViewModel.hairColor,
+                    pageNum = i
+                });
                 if (PageClassesEnabled)
                 {
                     tb.AddCssClass(PageClass);

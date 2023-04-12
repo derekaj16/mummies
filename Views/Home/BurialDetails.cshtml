@@ -18,6 +18,7 @@
                 <div class="col heading">
                     <h1>Burial</h1>
                     <div>Burial ID: @Model.Id</div>
+                    <div>Age At Death: @Model.Ageatdeath</div>
                 </div>
             </div>
             <div class="row">
@@ -35,7 +36,11 @@
                 <div class="col">
                     <div class="row mb-2">Male</div>
                     <div class="row mb-2">
-                        190/200N 40/50E
+                        @foreach (Mummy x in ViewBag.MummyList)
+{
+                                <p>Id: @x.mummyId<br />
+                                   Description: @x.hairColor</p>
+}
                     </div>
                     <div class="row mb-2">E</div>
                 </div>
