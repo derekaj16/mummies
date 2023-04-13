@@ -38,7 +38,7 @@ namespace mummies.Controllers
             _logger = logger;
             repo = temp;
             applicationContext = appContext;
-            mummyContext = tempContext;
+            mummyContext = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }

@@ -52,12 +52,6 @@
                 <a class="button" style="text-decoration: none;" asp-action="AddBurial" asp-controller="Home">Add Mummy</a>
             </div>
         }
-        <div class="list-group">
-            @foreach (Burialmain x in Model.Burials)
-            {
-                <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Northsouth @x.Squarenorthsouth @x.Eastwest @x.Squareeastwest @x.Area #@x.Burialnumber</a>
-            }
-        </div>
     </div>
 </div>
 
