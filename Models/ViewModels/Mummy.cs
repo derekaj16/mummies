@@ -1,20 +1,11 @@
-﻿using Mummies.Models;
-using Mummies.Models.ViewModels;
-using System;
+﻿using System;
 namespace Mummies.Models.ViewModels
 {
-	public class BurialsViewModel
+	public class Mummy
 	{
-		public IQueryable<Mummy> Burials { get; set; }
+        public long? Id { get; set; }
 
-        public List<Mummy> Mummies { get; set; }
-
-		public PageInfo pageInfo { get; set; }
-
-        public FilterSettings filterSettings { get; set; }
-
-        public FormValues formValues { get; set; }
-
+        // Burial Info
         public string? Squarenorthsouth { get; set; }
         public string? Headdirection { get; set; }
         public string? Northsouth { get; set; }
@@ -23,16 +14,22 @@ namespace Mummies.Models.ViewModels
         public string? Squareeastwest { get; set; }
         public string? Area { get; set; }
         public string? Burialnumber { get; set; }
+
+        // Mummy Info
         public string? Wrapping { get; set; }
         public string? Haircolor { get; set; }
         public string? Ageatdeath { get; set; }
         public string? Sex { get; set; }
+
+        // Body Analysis Info
         public double? Estimatestature { get; set; }
+
+        // Textile Info
+        public int? Textileid { get; set; }
         public string? TextileDescription { get; set; }
         public string? TextileFunction { get; set; }
         public string? TextileColor { get; set; }
         public string? TextileStructure { get; set; }
-
     }
 }
 

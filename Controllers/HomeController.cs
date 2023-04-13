@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using mummies.Models;
 using Mummies.Data;
 using Mummies.Models;
+
 using System.Linq;
 using mummies.Models.ViewModels;
 using Mummies.Models.ViewModels;
@@ -23,16 +24,21 @@ namespace mummies.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private MummyDbContext mummyContext;
+        private MummyDbContext mummyContext { get; set; }
+
+        private IMummyRepository repo;
+
         private ApplicationDbContext applicationContext;
         private UserManager<IdentityUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
 
-        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+
+        public HomeController(ILogger<HomeController> logger, MummyDbContext context, IMummyRepository temp, ApplicationDbContext appContext, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
-            mummyContext = context;
+            repo = temp;
             applicationContext = appContext;
+            mummyContext = tempContext;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -47,6 +53,8 @@ namespace mummies.Controllers
             return View();
         }
 
+
+        [HttpGet]
         public IActionResult BurialInfoAsync(string category, int pageNum = 1)
         {
             int pageSize = 30;
@@ -54,30 +62,88 @@ namespace mummies.Controllers
 
             // Check if the user is in the "Admin" role
             //ViewBag.isAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
+
+            IQueryable<Mummy> mummyQueryable = repo.GetBurials(); // Get empty filtering
+            
             var x = new BurialsViewModel
             {
-                Burials = mummyContext.Burialmains
-                // .Where(b => b.Category == category || category == null)
+                Burials = mummyQueryable
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
                 pageInfo = new PageInfo
                 {
-                    totalNumBurials = (mummyContext.Burialmains.Count()),
-                        //: mummyContext.Books.Where(x => x.Category == category).Count()),
+                    totalNumBurials = (mummyQueryable.Count()),
                     burialsPerPage = pageSize,
                     currentPage = pageNum
-                }
+                },
+
+                Mummies = mummyQueryable.ToList(),
+
+                filterSettings = new FilterSettings(),
+
+                formValues = new FormValues()
             };
-            // var burialInfo = mummyContext.Burialmains.ToList();
+
             return View(x);
         }
+
+
+        [HttpPost]
+        public IActionResult BurialInfo(int pageNum = 1)
+        {
+            Dictionary<string, string?> burialDict = new Dictionary<string, string?>();
+
+            foreach (string key in Request.Form.Keys)
+            {
+                burialDict.Add(key, Request.Form[key]);
+            }
+
+
+            int pageSize = 30;
+            IQueryable<Mummy> mummyQueryable = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] }, { "Area", Request.Form["Area"] } });
+
+            var x = new BurialsViewModel
+            {
+                Burials = mummyQueryable
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                pageInfo = new PageInfo
+                {
+                    totalNumBurials = (mummyQueryable.Count()),
+                    burialsPerPage = pageSize,
+                    currentPage = pageNum
+                },
+
+                Mummies = mummyQueryable.ToList(),
+
+                filterSettings = new FilterSettings
+                {
+                    Ageatdeath = Request.Form["Ageatdeath"],
+                    Haircolor = Request.Form["Haircolor"],
+                    Sex = Request.Form["Sex"],
+                    Wrapping = Request.Form["Wrapping"],
+                    Depth = Request.Form["Depth"],
+                    Northsouth = Request.Form["Northsouth"],
+                    Squarenorthsouth = Request.Form["Squarenorthsouth"],
+                    Eastwest = Request.Form["Eastwest"],
+                    Squareeastwest = Request.Form["Squareeastwest"],
+                    Area = Request.Form["Area"]
+                },
+
+                formValues = new FormValues()
+            };
+            return View(x);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddBurial()
         {
             return View("BurialForm");
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddBurial(Burialmain b)
@@ -94,6 +160,7 @@ namespace mummies.Controllers
                 return View("BurialForm", b);
             }
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditBurial(long burialId)
@@ -101,6 +168,7 @@ namespace mummies.Controllers
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View("BurialForm", mummy);
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditBurial(Burialmain b)
@@ -109,6 +177,7 @@ namespace mummies.Controllers
             mummyContext.SaveChanges();
             return RedirectToAction("BurialInfo");
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult DeleteBurial(long burialId)
@@ -116,6 +185,7 @@ namespace mummies.Controllers
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
             return View(mummy);
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteBurial(Burialmain b)
@@ -124,6 +194,7 @@ namespace mummies.Controllers
             mummyContext.SaveChanges();
             return RedirectToAction("BurialInfo");
         }
+        
         [HttpGet]
         public IActionResult SupervisedAnalysis()
         {
@@ -216,11 +287,13 @@ namespace mummies.Controllers
                 return View("Result");
             }
         }
+        
         [HttpGet]
         public IActionResult SexPrediction()
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult SexPrediction(SexModel jsonData)
         {
@@ -380,7 +453,9 @@ namespace mummies.Controllers
 
         public IActionResult BurialDetails(long burialId)
         {
+            
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
+
             return View(mummy);
         }
 

@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Mummies.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Mummies.Data;
+using mummies.Models;
 using System.Net;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -18,6 +20,8 @@ services.AddDbContext<ApplicationDbContext>(options =>
 var mummyConnection = configuration.GetConnectionString("MummyConnection");
 services.AddDbContext<MummyDbContext>(options =>
     options.UseNpgsql(mummyConnection));
+
+services.AddScoped<IMummyRepository, EFMummyRepository>();
 
 services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -103,6 +107,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.UseEndpoints(endpoints =>
+{
+    
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self' http://54.145.41.204:8080/predict; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self'; frame-src 'self'");
@@ -113,22 +126,7 @@ app.Use(async (context, next) =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+    
 app.MapRazorPages();
 
-// vv Possible role stuff?
-
-//using (var scope = app.Services.CreateScope())
-//{
-//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-//    var roles = new[] { "Admin", "Member", "TA" };
-//    foreach (var role in roles)
-//    {
-//        if (!await roleManager.RoleExistsAsync(role))
-//        {
-//            await roleManager.CreateAsync(new IdentityRole(role));
-//        }
-//    }
-//}
-
-    app.Run();
+app.Run();

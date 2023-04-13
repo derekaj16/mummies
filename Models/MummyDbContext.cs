@@ -433,6 +433,7 @@ namespace Mummies.Models
                     .HasMaxLength(200)
                     .HasColumnName("wrapping");
             });
+                
 
             modelBuilder.Entity<BurialmainBiological>(entity =>
             {
