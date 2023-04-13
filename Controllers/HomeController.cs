@@ -26,13 +26,15 @@ namespace mummies.Controllers
         private MummyDbContext mummyContext;
         private ApplicationDbContext applicationContext;
         private UserManager<IdentityUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
 
-        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext, UserManager<IdentityUser> userManager)
+        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             mummyContext = context;
             applicationContext = appContext;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -257,11 +259,120 @@ namespace mummies.Controllers
             return View();
         }
         [Authorize(Roles = "Admin")]
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin()
         {
-            return View();
+            //var users = _userManager.Users;
+            var users = new List<EditUserViewModel>();
+            foreach (var user in _userManager.Users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var userRoleViewModel = new EditUserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Roles = (List<string>)userRoles
+                };
+                users.Add(userRoleViewModel);
+            }
+            return View(users);
         }
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var model = new EditUserViewModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Roles = (List<string>)userRoles
 
+            };
+            return View("UserForm", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Admin");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View("UserForm", model);
+        }
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Admin");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return RedirectToAction("Admin");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ManageAdmin()
+        {
+            var roleId = "1";
+            var role = await _roleManager.FindByIdAsync(roleId);
+            var model = new List<UserRoleViewModel>();
+            foreach(var user in _userManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+
+                };
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected= false;
+                }
+                model.Add(userRoleViewModel);
+
+            }
+            return View("RoleManager", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ManageAdmin(List<UserRoleViewModel> model, string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            for (int i =0; i < model.Count; i++)
+            {
+                var user = await _userManager.FindByIdAsync(model[i].UserId);
+                IdentityResult result = null;
+                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await _userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return RedirectToAction("Admin");
+        }
+        //var userRoles = await userManager.getRolesAsync(user)
         //public IActionResult ManageAccounts()
         //{
         //    return View();
