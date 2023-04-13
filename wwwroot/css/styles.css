@@ -480,3 +480,13 @@ h2 {
 .fix {
     margin: 0 10%;
 }
+
+/*Unsupervised page styles*/
+
+.card-static-height {
+    height: 350px;
+}
+
+.card-static-height2 {
+    height: 360px;
+}

@@ -2,6 +2,219 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Unsupervised Analysis";
 }
+<div class="w-75 mx-auto">
+    <br />
+    <br />
+    <br />
+    <h1 class="text-secondary runner runnertext">Unsupervised Analysis</h1>
+    <br />
+    <br />
 
-<h1>Unsupervised Analysis Page</h1>
+
+    <p class="w-75 mx-auto text-body-tertiary">
+        Welcome! On this page you will find results of our "Unsupervised" data analytics. In traditional machine learning, a model is trained using labeled data, meaning that the data has already been categorized or classified by humans. 
+        However, in unsupervised machine learning, the model is given unlabeled data and must find patterns and relationships on its own.
+    </p>
+    <p class="w-75 mx-auto text-body-tertiary">
+        The use of unsupervised machine learning for this project could allow us to uncover hidden insights and patterns in the data
+        that may not have been apparent to human analysts. By analyzing large amounts of unlabeled data from mummy exhumations, we hope to gain
+        a deeper understanding of this fascinating topic.
+    </p>
+    <br />
+    <br />
+
+    <h3 class="w-75 mx-auto text-secondary runner runnertext fs-4">Clusters 1 & 2</h3>
+    <p class="w-75 mx-auto text-body-tertiary">
+        K-means clustering was utilized to perform clustering on the data, and the optimal number of clusters was determined by combining various methods like silhouette and
+        Calinski Harabasz scores. After analysis, it was determined that the optimal number of clusters is 4. The resulting clusters are depicted in the first two images, 
+        where the x, y, and z axes represent 3 features, and the color of each point represents the cluster to which it belongs. The 6 features used in the clustering were 
+        selected based on their feature importance scores from an XGBoost classifier that was previously created.
+    </p>
+
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col">
+                <div class="row g-4">
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/cluster_1-crop.png" class="card-img-top" alt="Cluster 1 Image">
+                            <div class="card-body card-static-height">
+                                <h5 class="card-title text-secondary runner runnertext fs-4">Features</h5>
+                                <p class="card-text text-body-tertiary">
+                                    Preservation_Well Preserved: This is a categorical variable indicating the state of the mummy when exhumed. 
+                                    The options include well preserved, partially preserved, wrapped, skeletal remains, disturbed, or other.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Length: This variable represents the length of the burial place of the mummy in meters. A value of 0 indicates
+                                    that no length was recorded.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Samplecollected_Unknown: Samples are typically collected at burial sites, including textiles, bones, artifacts,
+                                    and other objects. If it is not known whether samples were collected, it is marked as unknown.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_2-crop.png" class="card-img-top" alt="Clusters 2 Image">
+                            <div class="card-body card-static-height">
+                                <h5 class="card-title text-secondary runner runnertext fs-4">Features</h5>
+                                <p class="card-text text-body-tertiary">
+                                    Headdirection_W: This feature indicates the direction in which the mummy's head was facing when it was exhumed. 
+                                    The options include West, East, or unknown. The variable Headdirection_W specifically indicates whether the mummy's
+                                    head was facing West or not.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Area_SE: This variable indicates the location of the mummy's burial within a 100 square meter plot that was being excavated. 
+                                    SE stands for Southeast and is a binary category indicating whether the mummy was found in the Southeast area or not.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Haircolor_B: This categorical variable marks whether a mummy was found with brown hair or not.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3 class="w-75 mx-auto text-secondary runner runnertext fs-4">PCA Reduction</h3>
+    <p class="w-75 mx-auto text-body-tertiary">
+        Principal Component Analysis (PCA) is a technique used to reduce the dimensionality of data to maximize variance and facilitate visualization of clusters in 
+        scatterplots. In the analysis below, two principal components were created, with the first component plotted on the x-axis and the second component plotted 
+        on the y-axis. The colors of the dots on the scatterplot represent the cluster membership of each datapoint. PCA was employed to better visualize the clusters 
+        in a two-dimensional graph and identify which features contributed the most to the variance observed between the clusters.
+    </p>
+
+    <div class="container my-5 w-50">
+        <div class="row g-4">
+            <div class="col">
+                <div class="card">
+                    <img src="~/img/pca_reduction.png" class="card-img-top" alt="PCA Reduction Image">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3 class="w-75 mx-auto text-secondary runner runnertext fs-4">Clusters 3 & 4</h3>
+    <p class="w-75 mx-auto text-body-tertiary">
+        The two graphs displayed below illustrate the top 3 features that were used to create each component for the PCA graph shown above. 
+        The grouping of mummies into clusters in the PCA plot is based on their physical features, which naturally separate them into distinct groups. 
+        These features include bone measurements and burial location, which contribute to the observed clustering patterns.
+    </p>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col">
+                <div class="row g-4">
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_3-crop.png" class="card-img-top" alt="Clusters 3 Image">
+                            <div class="card-body card-static-height2">
+                                <h5 class="card-title text-secondary runner runnertext fs-4">Features</h5>
+                                <p class="card-text text-body-tertiary">
+                                    Humerusheaddiameter: This variable, measured in millimeters, represents the distance across the head of the humerus bone (if found). 
+                                    Records with a diameter of 0 indicate cases where the humerus head diameter was not recorded or was not found.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Squareeastwest: This variable indicates the distance, in meters, of the grave from the east or west of the point of origin. 
+                                    The grave is located within a 100 square meter plot that was excavated.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Squarenorthsouth: This variable indicates the distance, in meters, of the grave from the north or south of the point of origin. 
+                                    The number represents the distance of the plot, not the grave, from the point of origin.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_4-crop.png" class="card-img-top" alt="Clusters 4 Image">
+                            <div class="card-body card-static-height2">
+                                <h5 class="card-title text-secondary runner runnertext fs-4">Features</h5>
+                                <p class="card-text text-body-tertiary">
+                                    Femurlength: This variable represents the length of the femur, in centimeters, if it was found in the mummy. 
+                                    Femur lengths marked as 0 indicate cases where the length was not recorded, or a femur was not found.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Femurheaddiameter: This variable represents the distance across the head of the femur, in millimeters.
+                                    Values marked with 0 indicate cases where the femur head diameter was not recorded or not found.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Humerusheaddiameter: This variable represents the distance across the head of the humerus bone, in millimeters.
+                                    Values marked with 0 indicate cases where the humerus head diameter was not recorded or not found.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3 class="w-75 mx-auto text-secondary runner runnertext fs-4">Depth & Textile PCA Reduction</h3>
+    <p class="w-75 mx-auto text-body-tertiary">
+        The two images provided depict clustering analysis related to burial depth and textile information. The left image shows the results of 
+        clustering using principal component analysis, with two clusters marked by dot colorings. The right image presents groupings based on the 
+        top three features used to create Principal Component 1. The main conclusion from the analysis is that the separation of the clusters is 
+        primarily attributed to the presence or absence of data in the burials. However, the left image also reveals a separation between yarn count 
+        and stitch direction. As yarn count increases, stitch_direction_None approaches 0, and textile_function_values_None also approaches 0, resulting 
+        in distinct clusters. This suggests that mummies buried with more textiles tend to have higher yarn counts, more identifiable textiles, and different 
+        stitch directions. Additionally, Principal Component 2, which represents depth and whether there was only bones and no wrapping, appears to be 
+        the most important variables in explaining the maximum variance. This indicates that mummies tend to cluster based on what they were buried with, 
+        as well as factors such as burial depth and the presence of bone wrapping. This suggests that those buried with more items may be buried at deeper 
+        depths compared to those without.
+    </p>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col">
+                <div class="row g-4">
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/pca_depth_textile.png" class="card-img-top" alt="Clusters 3 Image">
+                            <div class="card-body">
+                                <h5 class="card-title text-secondary runner runnertext fs-4"></h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_depth_1.png" class="card-img-top" alt="Clusters 4 Image">
+                            <div class="card-body">
+                                <h5 class="card-title text-secondary runner runnertext fs-4">Features</h5>
+                                <p class="card-text text-body-tertiary">
+                                    Stitch_direction_None: This variable indicates whether mummies were marked with no textiles or no stitch direction of textiles found,
+                                    and is represented by a value of 1. In contrast, mummies where stitch direction was found are marked as 1 in a different category.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Count: This variable refers to yarn manipulation and is a numeric variable. Records marked with 0 indicate cases where no yarn
+                                    was found or it was unknown. Notably, Count was the variable with the highest value used in creating Principal Component 1,
+                                    which was used to differentiate clusters.
+                                </p>
+                                <p class="card-text text-body-tertiary">
+                                    Textile_function_value_None: This is a categorical variable with possible values such as fragmentary, ribbon, blanket/shroud,
+                                    tunic, and other. A value closer to 1 indicates that no textile function was assigned to the textiles found or none were found.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
