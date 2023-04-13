@@ -16,18 +16,18 @@ h2 {
 }
 
 .customForm {
-  display: grid;
-  grid-template-columns: 0.3fr 1fr;
-  grid-column-gap: 2rem;
-  align-items: center;
-  margin-left: 10rem;
-  margin-right: 10rem;
-  margin-top: -3rem;
-  padding: 3rem;
-  background: #b1bca0;
-  color: white;
-  border-radius: 1rem;
-  font-size: 18px;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    grid-column-gap: 2rem;
+    align-items: center;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-top: -3rem;
+    padding: 3rem;
+    background: #f8f8f8;
+    color: #383d3f;
+    border-radius: 1rem;
+    font-size: 18px;
 }
 
 .customForm > input,
@@ -428,12 +428,57 @@ h2 {
     margin-left: 20%;
    
 }
-.editDelete > a, .add > a{
+.editDelete > a, .add > a, .none > a{
     text-decoration: none;
 }
 
 .add {
     margin: 2rem 5%
+}
+.admin {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 80%;
+    margin: 5rem 0;
+}
+.admin > a {
+    text-decoration:none;
+}
+.userForm {
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    margin-top: 5rem;
+}
+.user{
+    min-width: 85%;
+}
+.delete {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.deletebuttons {
+    background: #CC3E40; 
+    border: 1px solid #CC3E40;
+}
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 60vh;
+}
+.topspace{
+    margin-top: 3rem;
+}
+.roleManager {
+    width: 30%;
+    margin-left: 10%;
+}
+.fix {
+    margin: 0 10%;
 }
 
 /*Unsupervised page styles*/
