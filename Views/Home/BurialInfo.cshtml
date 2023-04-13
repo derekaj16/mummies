@@ -67,14 +67,14 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Bring out ya dead!</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Filter</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form class="form" method="post" asp-action="BurialInfo">
 
                     @* LOCATION *@
-                    <label class="form-label">Distance (m)</label>
+                    <label class="form-label">Square North South</label>
                     <input class="form-control"
                            list="northSouthOptions"
                            id="Squarenorthsouth"
@@ -104,7 +104,7 @@
                         }
                     </select>
 
-                    <label class="form-label">Distance (m)</label>
+                    <label class="form-label">Square East West</label>
                     <input class="form-control"
                            list="eastWestOptions"
                            id="Squareeastwest"
