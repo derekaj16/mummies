@@ -4,10 +4,10 @@ using mummies.Models;
 using Mummies.Data;
 using Mummies.Models;
 using System.Linq;
-using mummies.Models.ViewModels;
 using Mummies.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Drawing.Printing;
 
 namespace mummies.Controllers
 {
@@ -16,19 +16,23 @@ namespace mummies.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private MummyDbContext mummyContext;
+        private MummyDbContext mummyContext { get; set; }
+
+        private IMummyRepository repo;
+
         private ApplicationDbContext applicationContext;
 
-        public HomeController(ILogger<HomeController> logger, MummyDbContext context, ApplicationDbContext appContext)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext appContext, MummyDbContext tempContext, IMummyRepository temp)
         {
             _logger = logger;
-            mummyContext = context;
+            repo = temp;
             applicationContext = appContext;
+            mummyContext = tempContext;
         }
 
         public IActionResult Index()
         {
-            ViewBag.things = mummyContext.Burialmains.ToList();
+            
             return View();
         }
 
@@ -37,48 +41,47 @@ namespace mummies.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult BurialInfo(
             int pageNum = 1,
-            string? ageAtDeath = null,
-            //string? squareNorthSouth = null,
-            //string? northSouth = null,
-            //string? squareEastWest = null,
-            //string? eastWest = null,
-            //string? textileColor = null,
-            //string? textileStructure = null,
-            //string? textileFunction = null,
-            string? burialDepth = null,
-            //string? estimateStature = null,
-            //string? headDirection = null,
-            //string? area = null,
-            //long? burialId = null,
-            string? hairColor = null
-            //string? sex = null,
-            //string? burialNumber = null
+            string? Squarenorthsouth = null,
+            string? Headdirection = null,
+            string? Northsouth = null,
+            string? Depth = null,
+            string? Eastwest = null,
+            string? Squareeastwest = null,
+            string? Area = null,
+            string? Burialnumber = null,
+            string? Wrapping = null,
+            string? Haircolor = null,
+            string? Ageatdeath = null,
+            string? Sex = null,
+            double? Estimatestature = null,
+            string? TextileDescription = null,
+            string? TextileFunction = null,
+            string? TextileColor = null,
+            string? TextileStructure = null
         )
         {
-            ViewBag.HairViewModel = new HairColorViewModel();
-            //// Get unique values for textile functions (because there are so many repeats)
-            //var functions = mummyContext.Textilefunctions.Select(t => t.Value).ToList();
-            //HashSet<String> textileSet = new HashSet<String>(functions);
+            //ViewBag.HairViewModel = new HairColorViewModel();
+            ////// Get unique values for textile functions (because there are so many repeats)
+            ////var functions = mummyContext.Textilefunctions.Select(t => t.Value).ToList();
+            ////HashSet<String> textileSet = new HashSet<String>(functions);
 
-            //var structures = mummyContext.Structures.Select(t => t.Value).ToList();
-            //HashSet<String> structureSet = new HashSet<String>(structures);
+            ////var structures = mummyContext.Structures.Select(t => t.Value).ToList();
+            ////HashSet<String> structureSet = new HashSet<String>(structures);
 
-            var ages = mummyContext.Burialmains.Select(a => a.Ageatdeath).ToList();
-            HashSet<String> ageSet = new HashSet<String>(ages);
-
-            //var areas = mummyContext.Burialmains.Select(a => a.Area).ToList();
-            //HashSet<String> areaSet = new HashSet<String>(areas);
+            ////var areas = mummyContext.Burialmains.Select(a => a.Area).ToList();
+            ////HashSet<String> areaSet = new HashSet<String>(areas);
 
   
 
 
-            //ViewBag.TextileFunctions = textileSet.ToList();
-            //ViewBag.TextileStructures = structureSet.ToList();
-            //ViewBag.Colors = mummyContext.Colors.ToList();
-            ViewBag.Ages = ageSet.ToList();
-            //ViewBag.Areas = areaSet.ToList();
+            ////ViewBag.TextileFunctions = textileSet.ToList();
+            ////ViewBag.TextileStructures = structureSet.ToList();
+            ////ViewBag.Colors = mummyContext.Colors.ToList();
+            //ViewBag.Ages = ageSet.ToList();
+            ////ViewBag.Areas = areaSet.ToList();
 
 
             // Create Pagination
@@ -94,66 +97,65 @@ namespace mummies.Controllers
             //                     MummyId = p.Id
             //                 }).ToList();
 
-           
-            var mummyList = (from bm in mummyContext.Burialmains
-                             select new Mummy
-                             {
-                                 mummyId = bm.Id,
-                                 burialDepth = bm.Depth,
-                                 ageAtDeath = bm.Ageatdeath
-                             }).AsEnumerable();
 
+            //var mummyList = (from bm in repo.Mummies
+            //                 select new Mummy
+            //                 {
+            //                     mummyId = bm.mummyId,
+            //                     burialDepth = bm.burialDepth,
+            //                     ageAtDeath = bm.ageAtDeath
+            //                 }).AsEnumerable();
 
+            //var filteredMummies = mummyList;
 
-            var filteredMummies = mummyList;
+            //if (burialDepth != null)
+            //{
+            //    filteredMummies = mummyList
+            //        .Where(x => double.TryParse(x.burialDepth, out var result)
+            //                    ? (result < (double.Parse(burialDepth)) && result > (double.Parse(burialDepth) - 0.5))
+            //                    : false)
+            //        .Select(x => new Mummy
+            //        {
+            //            mummyId = x.mummyId,
+            //            burialDepth = x.burialDepth,
+            //            ageAtDeath = x.ageAtDeath,
+            //            hairColor = x.hairColor
+            //        });
+            //}
 
-            
+            //if (ageAtDeath != null)
+            //{
+            //    filteredMummies = (from bm in repo.Mummies
+            //                       join fm in filteredMummies on bm.mummyId equals fm.mummyId
+            //                       where bm.ageAtDeath == ageAtDeath
+            //                       select new Mummy
+            //                       {
+            //                           mummyId = fm.mummyId,
+            //                           burialDepth = fm.burialDepth,
+            //                           ageAtDeath = bm.ageAtDeath,
+            //                           hairColor = fm.hairColor
+            //                       }).AsEnumerable();
+            //}
 
-            if (burialDepth != null)
-            {
-                filteredMummies = mummyList
-                    .Where(x => double.TryParse(x.burialDepth, out var result)
-                                ? (result < (double.Parse(burialDepth)) && result > (double.Parse(burialDepth) - 0.5))
-                                : false)
-                    .Select(x => new Mummy
-                    {
-                        mummyId = x.mummyId,
-                        burialDepth = x.burialDepth,
-                        ageAtDeath = x.ageAtDeath,
-                        hairColor = x.hairColor
-                    });
-            }
-
-            if (ageAtDeath != null)
-            {
-                filteredMummies = filteredMummies
-                    .Where(x => x.ageAtDeath == ageAtDeath);
-            }
-
-            if (hairColor != null)
-            {
-                filteredMummies = (from bm in mummyContext.Burialmains
-                                   join fm in filteredMummies on bm.Id equals fm.mummyId
-                                   where bm.Haircolor == "B"
-                                   select new Mummy
-                                   {
-                                       mummyId = fm.mummyId,
-                                       burialDepth = fm.burialDepth,
-                                       ageAtDeath = fm.ageAtDeath,
-                                       hairColor = bm.Haircolor
-                                   });
-            }
             //if (hairColor != null)
             //{
-            //    query.Where(x => x.Haircolor != null ? x.Haircolor.ToString() == hairColor : false);
+            //    filteredMummies = (from bm in repo.Mummies
+            //                       join fm in filteredMummies on bm.mummyId equals fm.mummyId
+            //                       where bm.hairColor == hairColor
+            //                       select new Mummy
+            //                       {
+            //                           mummyId = fm.mummyId,
+            //                           burialDepth = fm.burialDepth,
+            //                           ageAtDeath = fm.ageAtDeath,
+            //                           hairColor = bm.hairColor
+            //                       }).AsEnumerable();
             //}
-            
 
-            ViewBag.MummyList = filteredMummies.ToList();
+            ViewBag.Test = repo.Mummies;
 
             var x = new BurialsViewModel
             {
-                Burials = mummyContext.Burialmains
+                Burials = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] } })
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
@@ -164,13 +166,63 @@ namespace mummies.Controllers
                     currentPage = pageNum
                 },
 
-                //ageAtDeath = ageAtDeath != null ? ageAtDeath : null,
+                Mummies = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] } }).ToList(),
 
-                //burialDepth = burialDepth != null ? burialDepth : null
+                filterSettings = new FilterSettings(),
+
+                formValues = new FormValues()
             };
-            // var burialInfo = mummyContext.Burialmains.ToList();
+
             return View(x);
         }
+
+        [HttpPost]
+        public IActionResult BurialInfo(int pageNum = 1)
+        {
+            Dictionary<string, string?> burialDict = new Dictionary<string, string?>();
+
+            foreach (string key in Request.Form.Keys)
+            {
+                burialDict.Add(key, Request.Form[key]);
+            }
+
+
+            int pageSize = 30;
+            var mummyQueryable = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] } });
+
+            var x = new BurialsViewModel
+            {
+                Burials = mummyQueryable // repo.GetBurials(burialDict)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                pageInfo = new PageInfo
+                {
+                    totalNumBurials = (mummyContext.Burialmains.Count()),
+                    burialsPerPage = pageSize,
+                    currentPage = pageNum
+                },
+
+                Mummies = mummyQueryable.ToList(),
+
+                filterSettings = new FilterSettings
+                {
+                    Ageatdeath = Request.Form["Ageatdeath"],
+                    Haircolor = Request.Form["Haircolor"],
+                    Sex = Request.Form["Sex"],
+                    Wrapping = Request.Form["Wrapping"],
+                    Depth = Request.Form["Depth"],
+                    Northsouth = Request.Form["Northsouth"],
+                    Squarenorthsouth = Request.Form["Squarenorthsouth"],
+                    Eastwest = Request.Form["Eastwest"],
+                    Squareeastwest = Request.Form["Squareeastwest"]
+                },
+
+                formValues = new FormValues()
+            };
+            return View(x);
+        }
+
 
         public IActionResult SupervisedAnalysis()
         {
@@ -199,17 +251,7 @@ namespace mummies.Controllers
 
         public IActionResult BurialDetails(long burialId)
         {
-            var mummyList = (from p in mummyContext.Burialmains
-                            join pm in mummyContext.BurialmainTextiles on p.Id equals pm.MainBurialmainid
-                            join pd in mummyContext.Textiles on pm.MainTextileid equals pd.Id
-                            where p.Haircolor == "B"
-                            select new Mummy()
-                            {
-                                mummyId = p.Id,
-                                hairColor = p.Haircolor
-                            }).ToList();
-
-            ViewBag.MummyList = mummyList;
+            
             var mummy = mummyContext.Burialmains.Single(x => x.Id == burialId);
 
             return View(mummy);

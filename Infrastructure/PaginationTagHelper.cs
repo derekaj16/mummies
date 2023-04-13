@@ -46,9 +46,6 @@ namespace Mummies.Infrastructure
 
                 tb.Attributes["href"] = uh.Action(PageAction, new
                 {
-                    ageAtDeath = BurialsViewModel.ageAtDeath,
-                    burialDepth = BurialsViewModel.burialDepth,
-                    hairColor = BurialsViewModel.hairColor,
                     pageNum = i
                 });
                 if (PageClassesEnabled)

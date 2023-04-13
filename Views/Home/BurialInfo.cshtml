@@ -20,18 +20,18 @@
             <div class="mx-2">Filter Options</div>
         </button>
 
-        @foreach (Mummy m in ViewBag.MummyList)
-{
-                <div>
-                    <h3>Id: @m.mummyId</h3>
-                    <p>
-                        Depth: @m.burialDepth<br />
-                        Age: @m.ageAtDeath<br />
-                        Hair Color: @m.hairColor
-                    </p>
+        @*@foreach (Mummy m in ViewBag.MummyList)
+        {
+                        <div>
+                            <h3>Id: @m.mummyId</h3>
+                            <p>
+                                Depth: @m.burialDepth<br />
+                                Age: @m.ageAtDeath<br />
+                                Hair Color: @m.hairColor
+                            </p>
 
-                </div>
-}
+                        </div>
+        }*@
 
 
         @*@if (Model.Burials.Count() != 0)
@@ -47,6 +47,26 @@
         {
             <h1 class="text-center">Sorry! No results matched your search.</h1>
         }*@
+        @if (Model.Mummies != null)
+        {
+            @foreach (Mummy m in Model.Mummies)
+            {
+                <p>
+                    Age: @m.Ageatdeath<br />
+                    Hair: @m.Haircolor<br />
+                    Sex: @m.Sex<br />
+                    Wrapping: @m.Wrapping<br />
+                    Depth: @m.Depth<br />
+                    Location: @m.Squarenorthsouth @m.Northsouth @m.Squareeastwest @m.Eastwest @m.Area
+                </p>
+
+            }
+        }
+        else
+        {
+            <h1 class="text-center">Sorry! No results matched your search.</h1>
+        }
+
     </div>
 </div>
 
@@ -66,116 +86,163 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="form" method="get" asp-action="BurialInfo">
-                    @*<label class="form-label">Distance (m)</label>
-                        <input class="form-control" list="northSouthOptions" id="squareNorthSouth" asp-for="squareNorthSouth">
-                        <datalist id="squareNorthSouth" asp-for="squareNorthSouth">
-                            @for (int i = 0; i <= 500; i = i + 10)
+                <form class="form" method="post" asp-action="BurialInfo">
+                    <label class="form-label">Distance (m)</label>
+                    <input class="form-control" list="northSouthOptions" id="Squarenorthsouth" asp-for="Squarenorthsouth" name="Squarenorthsouth">
+                    <datalist id="northSouthOptions">
+                        @for (int i = 0; i <= 500; i = i + 10)
+                        {
+                            <option value="@i">@i/@(i+10)</option>
+                        }
+                    </datalist>
+
+                    <label class="form-label" asp-for="Northsouth">N/S</label>
+                    <select class="form-select" asp-for="Northsouth" name="Northsouth">
+                        <option value=""></option>
+                        @for (int i = 0; i < 2; i++)
+                        {
+                            @if (Model.formValues.directions[i] == Model.filterSettings.Northsouth)
                             {
-                                <option value="@i">@i/@(i+10)</option>
+                                <option value="@Model.formValues.directions[i]" selected>@Model.formValues.directions[i]</option>
                             }
-                        </datalist>
-
-                        <label class="form-label" asp-for="northSouth">N/S</label>
-                        <select class="form-select" asp-for="northSouth">
-                            <option value=""></option>
-                            <option value="N">N</option>
-                            <option value="S">S</option>
-                        </select>
-
-                        <label class="form-label">Distance (m)</label>
-                        <input class="form-control" list="eastWestOptions" id="squareEastWest" asp-for="squareEastWest">
-                        <datalist id="eastWestOptions" asp-for="squareEastWest">
-                            @for (int i = 0; i <= 500; i = i + 10)
+                            else
                             {
-                                <option value="@i">@i/@(i+10)</option>
+                                <option value="@Model.formValues.directions[i]">@Model.formValues.directions[i]</option>
                             }
+                        }
+                    </select>
 
-                        </datalist>
+                    <label class="form-label">Distance (m)</label>
+                    <input class="form-control" list="eastWestOptions" id="Squareeastwest" asp-for="Squareeastwest" name="Squareeastwest">
+                    <datalist id="eastWestOptions">
+                        @for (int i = 0; i <= 500; i = i + 10)
+                        {
+                            <option value="@i">@i/@(i+10)</option>
+                        }
+                    </datalist>
 
-                        <label class="form-label" asp-for="eastWest">E/W</label>
-                        <select class="form-select" asp-for="eastWest">
-                            <option value=""></option>
-                            <option value="E">E</option>
-                            <option value="W">W</option>
-                        </select>*@
-                    @*
-                        <label class="form-label" asp-for="textileColor">Textile Color</label>
-                        <select class="form-select" asp-for="textileColor">
-                            <option value=""></option>
-                            @foreach (Color color in ViewBag.Colors)
+                    <label class="form-label" asp-for="Eastwest">E/W</label>
+                    <select class="form-select" asp-for="Eastwest" name="Eastwest">
+                        <option value=""></option>
+                        @for (int i = 2; i < 4; i++)
+                        {
+                            @if (Model.formValues.directions[i] == Model.filterSettings.Eastwest)
                             {
-                                <option value="@color.Id">@color.Value</option>
+                                <option value="@Model.formValues.directions[i]" selected>@Model.formValues.directions[i]</option>
                             }
-                        </select>
-
-                        <label class="form-label" asp-for="textileFunction">Textile Function</label>
-                        <input class="form-control" list="textileOptions" id="textileList"  asp-for="textileFunction">
-                        <datalist id="textileOptions" asp-for="textileFunction">
-                            @foreach (String textile in ViewBag.TextileFunctions)
+                            else
                             {
-                                <option value="@textile">@textile</option>
+                                <option value="@Model.formValues.directions[i]">@Model.formValues.directions[i]</option>
                             }
-                        </datalist>  *@
 
-                    <label class="form-label" asp-for="burialDepth">Depth</label>
-                    <select class="form-select" asp-for="burialDepth">
+                        }
+                    </select>
+
+                    @*<label class="form-label" asp-for="TextileColor">Textile Color</label>
+        <select class="form-select" asp-for="TextileColor" name="TextileColor">
+            <option value=""></option>
+            @foreach (Color color in ViewBag.Colors)
+            {
+                <option value="@color.Id">@color.Value</option>
+            }
+        </select>
+
+        <label class="form-label" asp-for="TextileFunction">Textile Function</label>
+        <input class="form-control" list="textileOptions" id="TextileFunction" asp-for="TextileFunction" name="TextileFunction">
+        <datalist id="TextileFunction" asp-for="TextileFunction">
+            @foreach (String textile in ViewBag.TextileFunctions)
+            {
+                <option value="@textile">@textile</option>
+            }
+        </datalist>*@
+
+                    <label class="form-label" asp-for="Depth">Depth</label>
+                    <select class="form-select" asp-for="Depth" name="Depth">
                         <option value="">All</option>
                         @for (Double depth = 0.0; depth < 5.0; depth = depth + 0.5)
                         {
-                            <option value="@(depth + 0.5)">@depth - @(depth + 0.49)</option>
+                            @if (depth.ToString() == Model.filterSettings.Depth)
+                            {
+                                <option value="@(depth)" selected>@depth - @(depth + 0.49)</option>
+                            }
+                            else
+                            {
+                                <option value="@(depth)">@depth - @(depth + 0.49)</option>
+                            }
+
                         }
                     </select>
 
-                    <label class="form-label" asp-for="ageAtDeath">Age</label>
-                    <select class="form-select" asp-for="ageAtDeath" name="ageAtDeath">
+                    <label class="form-label" asp-for="Ageatdeath">Age</label>
+                    <select class="form-select" asp-for="Ageatdeath" name="Ageatdeath">
                         <option value="">All</option>
-                        @foreach (String age in ViewBag.Ages)
+                        @foreach (KeyValuePair<string, string> item in Model.formValues.ages)
                         {
-                            @switch (age)
+                            @if (item.Key == Model.filterSettings.Ageatdeath)
                             {
-                                case "N":
-                                    <option value="@age">
-                                        @Html.Raw("Newborn")
-                                    </option>
-                                    break;
-                                case "I":
-                                    <option value="@age">
-                                        @Html.Raw("Infant")
-                                    </option>
-                                    break;
-                                case "C":
-                                    <option value="@age">
-                                        @Html.Raw("Child")
-                                    </option>
-                                    break;
-                                case "A":
-                                    <option value="@age">
-                                        @Html.Raw("Adult")
-                                    </option>
-                                    break;
-                                case "U":
-                                    <option value="@age">
-                                        @Html.Raw("Unknown")
-                                    </option>
-                                    break;
-                                default:
-                                    break;
+                                <option value="@item.Key" selected>@item.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Key">@item.Value</option>
                             }
                         }
-
                     </select>
 
-                    <label class="form-label" asp-for="hairColor">Hair Color</label>
-                        <select class="form-select" asp-for="hairColor">
-                            <option value="">All</option>
-                            @foreach(var color in ViewBag.HairViewModel.HairColorDict)
+                    <label class="form-label" asp-for="Haircolor">Hair Color</label>
+                    <select class="form-select" asp-for="Haircolor" name="Haircolor">
+                        <option value="">All</option>
+                        @foreach (KeyValuePair<string, string> color in Model.formValues.hairColors)
+                        {
+                            @if (color.Key == Model.filterSettings.Haircolor)
+                            {
+                                <option value="@color.Key" selected>@color.Value</option>
+                            }
+                            else
                             {
                                 <option value="@color.Key">@color.Value</option>
                             }
-                        </select>
+                        }
+                    </select>
+
+                    <label class="form-label" asp-for="Sex">Sex</label>
+                    <select class="form-select" asp-for="Sex" name="Sex">
+                        <option value="">All</option>
+                        @foreach (KeyValuePair<string, string> sex in Model.formValues.sexes)
+                        {
+                            @if (sex.Key == Model.filterSettings.Sex)
+                            {
+                                <option value="@sex.Key" selected>@sex.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@sex.Key">@sex.Value</option>
+
+                            }
+                        }
+                    </select>
+
+                    <label class="form-label" asp-for="Wrapping">Wrapping</label>
+                    <select class="form-select" asp-for="Wrapping" name="Wrapping">
+                        <option value="">All</option>
+                        @foreach (KeyValuePair<string, string> wrap in Model.formValues.wrapping)
+                        {
+                            @if (wrap.Key == Model.filterSettings.Sex)
+                            {
+                                <option value="@wrap.Key" selected>@wrap.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@wrap.Key">@wrap.Value</option>
+
+                            }
+                        }
+                    </select>
                     <hr />
-                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <div class="w-100 d-flex flex-row" role="group">
+                        <button type="submit" class="btn btn-primary flex-grow-1 m-1">Filter</button>
+                        <button type="button" class="btn btn-outline-primary flex-grow-1 m-1" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>

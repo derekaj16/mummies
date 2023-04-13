@@ -16,6 +16,8 @@
     <None Remove="Views\Admin\" />
     <None Remove="Services\" />
     <None Remove="Services\Mailer\" />
+    <None Remove="Models\Repository\" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -44,6 +46,8 @@
     <Folder Include="Services\Mailer\" />
     <Folder Include="wwwroot\lib\qrcode\" />
     <Folder Include="wwwroot\img\" />
+    <Folder Include="Models\Repository\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\qrcode\" />
