@@ -435,3 +435,13 @@ h2 {
 .add {
     margin: 2rem 5%
 }
+
+/*Unsupervised page styles*/
+
+.card-static-height {
+    height: 350px;
+}
+
+.card-static-height2 {
+    height: 360px;
+}
