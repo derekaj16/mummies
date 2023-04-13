@@ -34,39 +34,28 @@
         }*@
 
 
-        @*@if (Model.Burials.Count() != 0)
+        @if (Model.Burials.Count() != 0)
         {
             <div class="list-group mt-5">
-                @foreach (Burialmain x in Model.Burials)
+                @foreach (var x in Model.pageInfo)
                 {
-                    <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">Age at Death: @x.Ageatdeath ... Burial Depth: @x.Depth ... Hair Color: @x.Haircolor</a>
+                    <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@m.Id" class="list-group-item list-group-item-action">
+                        <p>
+                            Age: @m.Ageatdeath<br />
+                            Hair: @m.Haircolor<br />
+                            Sex: @m.Sex<br />
+                            Wrapping: @m.Wrapping<br />
+                            Depth: @m.Depth<br />
+                            Location: @m.Squarenorthsouth @m.Northsouth @m.Squareeastwest @m.Eastwest @m.Area
+                        </p>
+                    </a>
                 }
             </div>
         }
         else
         {
             <h1 class="text-center">Sorry! No results matched your search.</h1>
-        }*@
-        @if (Model.Mummies != null)
-        {
-            @foreach (Mummy m in Model.Mummies)
-            {
-                <p>
-                    Age: @m.Ageatdeath<br />
-                    Hair: @m.Haircolor<br />
-                    Sex: @m.Sex<br />
-                    Wrapping: @m.Wrapping<br />
-                    Depth: @m.Depth<br />
-                    Location: @m.Squarenorthsouth @m.Northsouth @m.Squareeastwest @m.Eastwest @m.Area
-                </p>
-
-            }
         }
-        else
-        {
-            <h1 class="text-center">Sorry! No results matched your search.</h1>
-        }
-
     </div>
 </div>
 

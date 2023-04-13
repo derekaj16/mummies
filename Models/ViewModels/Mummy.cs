@@ -3,6 +3,8 @@ namespace Mummies.Models.ViewModels
 {
 	public class Mummy
 	{
+        public long? Id { get; set; }
+
         // Burial Info
         public string? Squarenorthsouth { get; set; }
         public string? Headdirection { get; set; }
