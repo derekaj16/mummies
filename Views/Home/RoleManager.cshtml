@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Manage Admins";
+}
+@model List<UserRoleViewModel>
+<div class="roleManager topspace">
+    <form class="card" method="post">
+        <div class="card-header">Admin Privileges</div>
+        <ul class="list-group list-group-flush">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <li class ="list-group-item">
+                <input type="hidden" asp-for="@Model[i].UserId"/>
+                <input type="hidden" asp-for="@Model[i].UserName" />
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="@Model[i].IsSelected" />
+                    <label class="form-check-label">@Model[i].UserName</label>
+                </div>
+                </li>
+            }
+        </ul>
+        <button class="button" type="submit" asp-action="ManageAdmin" asp-route-roleId="1">Save</button>
+
+    </form>
+</div>

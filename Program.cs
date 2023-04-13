@@ -4,6 +4,8 @@ using Mummies.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Mummies.Data;
 using mummies.Models;
+using System.Net;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -38,11 +40,11 @@ services.AddAuthentication().AddGoogle(googleOptions =>
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 0;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 12;
     options.Password.RequiredUniqueChars = 0;
 
     // Lockout settings.
@@ -67,6 +69,22 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+// Http to Https Redirection
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+    options.HttpsPort = 443;
+});
+
+// Hsts Settings
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    // hsts ttl (helpful to make shorter at first in production in case revert to http is needed)
+    options.MaxAge = TimeSpan.FromDays(1);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -89,33 +107,26 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.UseEndpoints(endpoints =>
 {
-    //endpoints.MapControllerRoute(
-    //    name: "page",
-    //    pattern: ""
-    //    )
+    
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Content-Security-Policy", "default-src 'self' http://54.145.41.204:8080/predict; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self'; frame-src 'self'");
+
+    await next();
+});
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    
 app.MapRazorPages();
 
-// vv Possible role stuff?
-
-//using (var scope = app.Services.CreateScope())
-//{
-//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-//    var roles = new[] { "Admin", "Member", "TA" };
-//    foreach (var role in roles)
-//    {
-//        if (!await roleManager.RoleExistsAsync(role))
-//        {
-//            await roleManager.CreateAsync(new IdentityRole(role));
-//        }
-//    }
-//}
-
-    app.Run();
+app.Run();

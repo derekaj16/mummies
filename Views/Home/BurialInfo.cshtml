@@ -1,16 +1,19 @@
-﻿@*
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Mummies";
 }
-
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @model BurialsViewModel
 
 
 
-<p>Total Burials: @Model.pageInfo.totalNumBurials</p>
 
 @* SEARCH RESULTS *@
+
 <div class="row">
     <div class="col-md-8 mx-auto">
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filter">
@@ -42,6 +45,19 @@
         {
             <h1 class="text-center">Sorry! No results matched your search.</h1>
         }
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="add">
+                <a class="button" style="text-decoration: none;" asp-action="AddBurial" asp-controller="Home">Add Mummy</a>
+            </div>
+        }
+        <div class="list-group">
+            @foreach (Burialmain x in Model.Burials)
+            {
+                <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@x.Id" class="list-group-item list-group-item-action">@x.Northsouth @x.Squarenorthsouth @x.Eastwest @x.Squareeastwest @x.Area #@x.Burialnumber</a>
+            }
+        </div>
     </div>
 </div>
 

@@ -39,7 +39,6 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Models\ViewModels\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Services\" />

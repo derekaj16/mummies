@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Sex Prediction";
+}
+@model SexModel
+<div class="text-center">
+    <h1 class="display-4">Sex Prediction</h1>
+</div>
+
+<div class="userForm">
+    <div class="user">
+        <form class="customForm" method="post">
+            <label asp-for="squarenorthsouth">Square North South:</label>
+            <input type="number" step="1" asp-for="squarenorthsouth" required/>
+            <label asp-for="westtohead">West to Head:</label>
+            <input type="number" step="1" asp-for="westtohead" required/>
+            <label asp-for="westtofeet">West to Feet:</label>
+            <input type="number" step="1" asp-for="westtofeet" required />
+            <label asp-for="southtohead">South to Head:</label>
+            <input type="number" step="1" asp-for="southtohead" required />
+            <label asp-for="southtofeet">South to Feet:</label>
+            <input type="number" step="1" asp-for="southtofeet" required/>
+            <label asp-for="area_SE">Area:</label>
+            <select asp-for="area_SE" required>
+                <option value="0">Unknown</option>
+                <option value="1">SouthEast</option>
+                <option value="0">SouthWest</option>
+                <option value="0">NorthEast</option>
+                <option value="0">NorthWest</option>
+                <option value="0">NorthNorthWest</option>
+            </select>
+            <label asp-for="burialnumber">Burial Number:</label>
+            <input type="number" step="1" asp-for="burialnumber" required />
+            <label asp-for="depth">Depth:</label>
+            <input type="number" step=".01" asp-for="depth" required/>
+            <label asp-for="headdirection_W">Head Direction:</label>
+            <select asp-for="headdirection_W" required>
+                <option value="1">West</option>
+                <option value="0">East</option>
+            </select>
+            <label asp-for="wrapping_H">Wrapping:</label>
+            <select asp-for="wrapping_H" required>
+                <option value="0">Unknown</option>
+                <option value="0">Bones</option>
+                <option value="0">Whole</option>
+                <option value="0">Skeleton</option>
+                <option value="1">Half-Wrapped</option>
+            </select>
+            <label asp-for="preservation_Well_preserved">Preservation:</label>
+            <select asp-for="preservation_Well_preserved" required>
+                <option value="1">Well Preserved</option>
+                <option value="0">Partially Preserved</option>
+                <option value="0">Wrapped</option>
+                <option value="0">Skeletal Remainis</option>
+                <option value="0">Disturbed</option>
+                <option value="0">Other</option>
+            </select>
+            <label asp-for="length">Length:</label>
+            <input type="number" step="1" asp-for="length" required/>
+            <label asp-for="adultsubadult_C">Age:</label>
+            <select asp-for="adultsubadult_C" required>
+                <option value="0">Adult</option>
+                <option value="1">Child</option>
+            </select>
+            <label asp-for="haircolor_B">Hair Color:</label>
+            <select asp-for="haircolor_B" required>
+                <option value="1">Brown/Dark Brown/Lt Brown</option>
+                <option value="0">Black</option>
+                <option value="0">B</option>
+                <option value="0">Blond</option>
+                <option value="0">Red/Red-Bl</option>
+                <option value="0">Brown-Red</option>
+                <option value="0">Unknown</option>
+            </select>
+            <label asp-for="samplescollected_unknown">Samples Collected:</label>
+            <select asp-for="samplescollected_unknown" required>
+                <option value="1">Unknown</option>
+                <option value="0">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <button class="button" type="submit">Submit</button>
+        </form>
+    </div>
+</div>

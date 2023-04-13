@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Burial Form";
+}
+
+@model Burialmain
+
+<div class="text-center">
+    <h1 class="display-4">Burial</h1>
+</div>
+
+<div class="userForm">
+    <div class="user"> 
+        <form class="customForm" method="post">
+            <label asp-for="Id">Id:</label>
+            <input asp-for="Id" required/>
+            <label asp-for="Northsouth">Northsouth:</label>
+            <select asp-for="Northsouth" required> 
+                <option value="N">North</option>
+                <option value="S">South</option>
+            </select>
+            <label asp-for="Squarenorthsouth">SquareNorthSouth:</label>
+            <input type="number" asp-for="Squarenorthsouth" required/>
+            <label asp-for="Eastwest">Eastwest:</label>
+            <select asp-for="Eastwest" required>
+                <option value="E">East</option>
+                <option value="W">West</option>
+            </select>
+            <label asp-for="Squareeastwest">Squareeastwest:</label>
+            <input type="number" asp-for="Squareeastwest" required/>
+            <label asp-for="Area">Area:</label>
+            <select asp-for="Area" required>
+                <option value="NE">NorthEast</option>
+                <option value="NW">NorthWest</option>
+                <option value="SE">SouthEast</option>
+                <option value="SW">SouthWest</option>
+            </select>
+            <label asp-for="Burialnumber">Burial Number:</label>
+            <input type="number" asp-for="Burialnumber" required/>
+            <label asp-for="Sex">Sex:</label>
+            <select asp-for="Sex">
+                <option value="Unknown">Unknown</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <label asp-for="Ageatdeath">Age at Death:</label>
+            <select asp-for="Ageatdeath">
+                <option value="Unknown">Unknown</option>
+                <option value="A">Adult</option>
+                <option value="C">Child</option>
+                <option value="I">Infant</option>
+                <option value="N">Newborn</option>
+            </select>
+            <label asp-for="Headdirection">Head Direction:</label>
+            <select asp-for="Headdirection">
+                <option value="E">East</option>
+                <option value="W">West</option>
+            </select>
+            <label asp-for="Depth">Depth:</label>
+            <input type="number" step=".01" asp-for="Depth" />
+            <label asp-for="Haircolor">Hair Color:</label>
+            <select asp-for="Haircolor">
+                <option value="B">Brown/Dark Brown/Lt Brown</option>
+                <option value="K">Black</option>
+                <option value="D">Blond</option>
+                <option value="R">Red/Red-Bl</option>
+                <option value="A">Brown-Red</option>
+                <option value="U">Unknown</option>
+            </select>
+
+            <button class="button" type="submit">Save</button>
+        </form>
+    </div>
+</div>
