@@ -276,6 +276,7 @@ namespace mummies.Controllers
             }
             return View(users);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
@@ -291,6 +292,7 @@ namespace mummies.Controllers
             };
             return View("UserForm", model);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
@@ -308,6 +310,7 @@ namespace mummies.Controllers
             }
             return View("UserForm", model);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -322,6 +325,7 @@ namespace mummies.Controllers
             }
             return RedirectToAction("Admin");
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> ManageAdmin()
         {
@@ -349,6 +353,7 @@ namespace mummies.Controllers
             }
             return View("RoleManager", model);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> ManageAdmin(List<UserRoleViewModel> model, string roleId)
         {
@@ -372,11 +377,6 @@ namespace mummies.Controllers
             }
             return RedirectToAction("Admin");
         }
-        //var userRoles = await userManager.getRolesAsync(user)
-        //public IActionResult ManageAccounts()
-        //{
-        //    return View();
-        //}
 
         public IActionResult BurialDetails(long burialId)
         {
