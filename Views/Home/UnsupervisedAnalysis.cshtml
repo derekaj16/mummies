@@ -4,4 +4,119 @@
 @{
 }
 
-<h1>Unsupervised Analysis Page</h1>
+<br />
+<br />
+<br />
+<h1>Unsupervised Analysis</h1>
+<br />
+<br />
+
+
+<p class="w-50 mx-auto">
+    Welcome! On this page you will find results of our "Unsupervised" data analytics. In traditional machine learning, a model is trained using labeled data, meaning that the data has already been categorized or classified by humans. 
+    However, in unsupervised machine learning, the model is given unlabeled data and must find patterns and relationships on its own.
+</p>
+<p class="w-50 mx-auto">
+    The use of unsupervised machine learning for this project could allow us to uncover hidden insights and patterns in the data
+    that may not have been apparent to human analysts. By analyzing large amounts of unlabeled data from mummy exhumations, we hope to gain
+    a deeper understanding of this fascinating topic.
+</p>
+<br />
+<br />
+
+<h3 class="w-50 mx-auto">Clusters 1 & 2</h3>
+<p class="w-50 mx-auto">
+    Clustering was performed on the data using k-means clustering, and the optimal number of clusters was selected using different methods such as silhouette and 
+    Calinski-Harabasz scores. The optimal number of clusters chosen for analysis was 4. The clusters are visualized in the first two images, where the x, y, and z 
+    axes represent 3 features. The color of each point represents the cluster it belongs to.
+</p>
+
+<div class="w-75 mx-auto">
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col">
+                <div class="row g-4">
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/cluster_1-crop.png" class="card-img-top" alt="Cluster 1 Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Cluster Analysis 1</h5>
+                                <p class="card-text">XG boost stuff</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_2-crop.png" class="card-img-top" alt="Clusters 2 Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Cluster Analysis 2</h5>
+                                <p class="card-text">Description of Clusters 2 Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3 class="w-75 mx-auto">PCA Reduction</h3>
+    <p class="w-75 mx-auto">
+        Principal Component Analysis (PCA) was used to reduce the number of features in order to maximize variance and make clusters more discernible when plotted. 
+        The scatterplot in the PCA graph below was created using 2 components, with the first component on the x-axis and the second component on the y-axis, 
+        and the dot colors represent the cluster each datapoint belongs to.
+    </p>
+    <br />
+
+    <div class="container my-5 w-50">
+        <div class="row g-4">
+            <div class="col">
+                <div class="card">
+                    <img src="~/img/pca_reduction.png" class="card-img-top" alt="PCA Reduction Image">
+                    <div class="card-body">
+                        <h5 class="card-title">PCA Reduction</h5>
+                        <p class="card-text">Description of PCA Reduction Image</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3 class="w-75 mx-auto">Clusters 3 & 4</h3>
+    <p class="w-75 mx-auto">
+        The two graphs below depict the top 3 features used to create each principal component for the PCA graph. 
+        The clustering patterns observed in the PCA plot indicate that bone dimensions and burial location play a role in the formation of natural clusters in the data.
+    </p>
+    <br />
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col">
+                <div class="row g-4">
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_3-crop.png" class="card-img-top" alt="Clusters 3 Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Cluster Analysis 3</h5>
+                                <p class="card-text">Description of Clusters 3 Image</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="~/img/clusters_4-crop.png" class="card-img-top" alt="Clusters 4 Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Cluster Analysis 4</h5>
+                                <p class="card-text">Description of Clusters 4 Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
