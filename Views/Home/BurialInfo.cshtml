@@ -20,24 +20,10 @@
             <div class="mx-2">Filter Options</div>
         </button>
 
-        @*@foreach (Mummy m in ViewBag.MummyList)
-        {
-                        <div>
-                            <h3>Id: @m.mummyId</h3>
-                            <p>
-                                Depth: @m.burialDepth<br />
-                                Age: @m.ageAtDeath<br />
-                                Hair Color: @m.hairColor
-                            </p>
-
-                        </div>
-        }*@
-
-
         @if (Model.Burials.Count() != 0)
         {
             <div class="list-group mt-5">
-                @foreach (var x in Model.pageInfo)
+                @foreach (Mummy m in Model.Burials)
                 {
                     <a asp-action="BurialDetails" asp-controller="Home" asp-route-burialId="@m.Id" class="list-group-item list-group-item-action">
                         <p>
@@ -76,8 +62,15 @@
             </div>
             <div class="modal-body">
                 <form class="form" method="post" asp-action="BurialInfo">
+
+                    @* LOCATION *@
                     <label class="form-label">Distance (m)</label>
-                    <input class="form-control" list="northSouthOptions" id="Squarenorthsouth" asp-for="Squarenorthsouth" name="Squarenorthsouth">
+                    <input class="form-control"
+                           list="northSouthOptions"
+                           id="Squarenorthsouth"
+                           asp-for="Squarenorthsouth"
+                           name="Squarenorthsouth"
+                           value="@Model.filterSettings.Squarenorthsouth">
                     <datalist id="northSouthOptions">
                         @for (int i = 0; i <= 500; i = i + 10)
                         {
@@ -102,7 +95,12 @@
                     </select>
 
                     <label class="form-label">Distance (m)</label>
-                    <input class="form-control" list="eastWestOptions" id="Squareeastwest" asp-for="Squareeastwest" name="Squareeastwest">
+                    <input class="form-control"
+                           list="eastWestOptions"
+                           id="Squareeastwest"
+                           asp-for="Squareeastwest"
+                           name="Squareeastwest"
+                           value="@Model.filterSettings.Squareeastwest">
                     <datalist id="eastWestOptions">
                         @for (int i = 0; i <= 500; i = i + 10)
                         {
@@ -124,6 +122,22 @@
                                 <option value="@Model.formValues.directions[i]">@Model.formValues.directions[i]</option>
                             }
 
+                        }
+                    </select>
+
+                    <label class="form-label" asp-for="Area">Area</label>
+                    <select class="form-select" asp-for="Area" name="Area">
+                        <option value=""></option>
+                        @for (int i = 0; i < Model.formValues.areas.Count(); i++)
+                        {
+                            @if (Model.formValues.areas[i] == Model.filterSettings.Area)
+                            {
+                                <option value="@Model.formValues.areas[i]" selected>@Model.formValues.areas[i]</option>
+                            }
+                            else
+                            {
+                                <option value="@Model.formValues.areas[i]">@Model.formValues.areas[i]</option>
+                            }
                         }
                     </select>
 

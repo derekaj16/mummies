@@ -12,6 +12,7 @@ namespace Mummies.Models.ViewModels
 		public string? Squarenorthsouth { get; set; }
 		public string? Eastwest { get; set; }
 		public string? Squareeastwest { get; set; }
+		public string? Area { get; set; }
     }
 }
 

@@ -8,6 +8,7 @@ namespace Mummies.Models.ViewModels
         public Dictionary<string, string> sexes { get; set; }
         public Dictionary<string, string> wrapping { get; set; }
         public List<string> directions { get; set; }
+        public List<string> areas { get; set; }
 
         public FormValues()
 		{
@@ -51,6 +52,14 @@ namespace Mummies.Models.ViewModels
                 "S",
                 "E",
                 "W"
+            };
+
+            areas = new List<string>
+            {
+                "NE",
+                "NW",
+                "SE",
+                "SW"
             };
     }
 	}

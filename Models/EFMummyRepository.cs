@@ -29,7 +29,8 @@ namespace mummies.Models;
                 Northsouth = x.Northsouth,
                 Squarenorthsouth = x.Squarenorthsouth,
                 Eastwest = x.Eastwest,
-                Squareeastwest = x.Squareeastwest
+                Squareeastwest = x.Squareeastwest,
+                Area = x.Area
             });
 
             if (burialParams != null) // Check if a dictionary was passed in. If not,
@@ -75,6 +76,10 @@ namespace mummies.Models;
 
                 query = !string.IsNullOrEmpty(burialParams["Squareeastwest"])
                     ? query.Where(s => s.Squareeastwest == burialParams["Squareeastwest"])
+                    : query;
+
+                query = !string.IsNullOrEmpty(burialParams["Area"])
+                    ? query.Where(a => a.Area == burialParams["Area"])
                     : query;
             }
 

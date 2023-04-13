@@ -66,7 +66,7 @@ namespace mummies.Controllers
 
             // Create Pagination
             int pageSize = 30;
-            IQueryable<Mummy> mummyQueryable = repo.GetBurials();
+            IQueryable<Mummy> mummyQueryable = repo.GetBurials(); // Get empty filtering
 
             var x = new BurialsViewModel
             {
@@ -103,7 +103,7 @@ namespace mummies.Controllers
 
 
             int pageSize = 30;
-            IQueryable<Mummy> mummyQueryable = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] } });
+            IQueryable<Mummy> mummyQueryable = repo.GetBurials(new Dictionary<string, string?> { { "Ageatdeath", Request.Form["Ageatdeath"] }, { "Haircolor", Request.Form["Haircolor"] }, { "Sex", Request.Form["Sex"] }, { "Wrapping", Request.Form["Wrapping"] }, { "Depth", Request.Form["Depth"] }, { "Northsouth", Request.Form["Northsouth"] }, { "Eastwest", Request.Form["Eastwest"] }, { "Squarenorthsouth", Request.Form["Squarenorthsouth"] }, { "Squareeastwest", Request.Form["Squareeastwest"] }, { "Area", Request.Form["Area"] } });
 
             var x = new BurialsViewModel
             {
@@ -130,7 +130,8 @@ namespace mummies.Controllers
                     Northsouth = Request.Form["Northsouth"],
                     Squarenorthsouth = Request.Form["Squarenorthsouth"],
                     Eastwest = Request.Form["Eastwest"],
-                    Squareeastwest = Request.Form["Squareeastwest"]
+                    Squareeastwest = Request.Form["Squareeastwest"],
+                    Area = Request.Form["Area"]
                 },
 
                 formValues = new FormValues()
