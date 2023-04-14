@@ -17,7 +17,7 @@ namespace mummies.Models;
 
         public IQueryable<Burialmain> Mummies => mummyContext.Burialmains;
 
-        public IQueryable<Mummy> GetBurials(bool hasStature = false, Dictionary<string, string?>? burialParams = null)
+        public IQueryable<Mummy> GetBurials(Dictionary<string, string?>? burialParams = null)
         {
         var query = mummyContext.Burialmains
             //.Join(
