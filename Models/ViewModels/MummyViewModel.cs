@@ -13,7 +13,5 @@ namespace mummies.Models.ViewModels
         public IQueryable<Structure> structures { get; set; }
         public IQueryable<ColorTextile> colorTextiles { get; set; } 
         public IQueryable<Color> colors { get; set; }
-
-        
     }
 }

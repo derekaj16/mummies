@@ -63,8 +63,9 @@ namespace mummies.Controllers
             // Check if the user is in the "Admin" role
             //ViewBag.isAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
 
+
             IQueryable<Mummy> mummyQueryable = repo.GetBurials(); // Get empty filtering
-            
+
             var x = new BurialsViewModel
             {
                 Burials = mummyQueryable
