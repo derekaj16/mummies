@@ -2,6 +2,7 @@
 using Mummies.Models;
 using Mummies.Models.ViewModels;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace mummies.Models;
 
@@ -16,9 +17,15 @@ namespace mummies.Models;
 
         public IQueryable<Burialmain> Mummies => mummyContext.Burialmains;
 
-        public IQueryable<Mummy> GetBurials(Dictionary<string, string?>? burialParams = null)
+        public IQueryable<Mummy> GetBurials(bool hasStature = false, Dictionary<string, string?>? burialParams = null)
         {
-            var query = mummyContext.Burialmains.Select(x => new Mummy
+        var query = mummyContext.Burialmains
+            //.Join(
+            //mummyContext.BurialmainBodyanalysischarts,
+            //bm => bm.Id,
+            //bm_ba => bm_ba.MainBurialmainid,
+            //(bm, bm_ba) => new { bm, bm_ba })
+            .Select(x => new Mummy
             {
                 Id = x.Id,
                 Ageatdeath = x.Ageatdeath,
@@ -29,11 +36,26 @@ namespace mummies.Models;
                 Northsouth = x.Northsouth,
                 Squarenorthsouth = x.Squarenorthsouth,
                 Eastwest = x.Eastwest,
-                Squareeastwest = x.Squareeastwest,
-                Area = x.Area
+                Squareeastwest = x.Squareeastwest
             });
 
-            if (burialParams != null) // Check if a dictionary was passed in. If not,
+        //.Join(
+        //    mummyContext.BurialmainTextiles,
+        //    bm => bm.Id,
+        //    bt => bt.MainBurialmainid,
+        //    (bm, bt) => new { bm, bt })
+        //.Join(
+        //    mummyContext.Textiles,
+        //    b => b.bt.MainTextileid,
+        //    t => t.Id,
+        //    (b, t) => new { b, t })
+        //.Join(
+        //    mummyContext.ColorTextiles,
+        //    t => t.t.Id,
+        //    c => c.MainTextileid,
+        //    (t, c) => new { t, c})
+
+        if (burialParams != null) // Check if a dictionary was passed in. If not,
                                       // the user only navigated to the page, not filtered
             {
                 query = !string.IsNullOrEmpty(burialParams?["Ageatdeath"])
@@ -83,6 +105,6 @@ namespace mummies.Models;
                     : query;
             }
 
-            return query;
+            return query.AsNoTracking();
         }
     }

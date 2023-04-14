@@ -8,7 +8,7 @@ namespace mummies.Models
 	{
         public IQueryable<Burialmain> Mummies { get; }
 
-        public IQueryable<Mummy> GetBurials(Dictionary<string, string?>? burialParams = null);
+        public IQueryable<Mummy> GetBurials(bool hasStature = false, Dictionary<string, string?>? burialParams = null);
     }
 }
 
